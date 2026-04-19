@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Julie's US Trip 2026 - Final with Correct Times</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .header .dates {
+            font-size: 1.3em;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        .flight-summary {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .flight-summary h3 {
+            color: #1565c0;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .flight-item {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 3px solid #4caf50;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .flight-item.waitlisted {
+            border-left-color: #ff9800;
+            background: #fff3e0;
+        }
+
+        .flight-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .flight-time {
+            font-weight: bold;
+            color: #1565c0;
+            font-size: 1.1em;
+        }
+
+        .flight-route {
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .timezone-note {
+            font-size: 0.9em;
+            color: #666;
+            font-style: italic;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        .status-confirmed {
+            background: #4caf50;
+            color: white;
+        }
+
+        .status-waitlisted {
+            background: #ff9800;
+            color: white;
+        }
+        
+        .controls {
+            padding: 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.9em;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn.secondary {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #333;
+        }
+
+        .github-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px;
+            border-left: 4px solid #6f42c1;
+        }
+
+        .github-info h4 {
+            color: #6f42c1;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>✈️ Julie's US Trip 2026</h1>
+            <div class="dates">May 15 - June 2, 2026 • Corrected Time Zones</div>
+        </div>
+
+        <div class="flight-summary">
+            <h3>🛫 Flight Schedule (Correct Time Zones - May 2026)</h3>
+            
+            <div class="flight-item waitlisted">
+                <div class="flight-details">
+                    <div class="flight-route">🇦🇺 QF73 Sydney → San Francisco 🇺🇸</div>
+                    <div class="status-badge status-waitlisted">WAITLISTED</div>
+                </div>
+                <div class="flight-time">Depart: 9:25 PM AEST → Arrive: 4:15 PM PDT (same day)</div>
+                <div class="timezone-note">Australia Standard Time → Pacific Daylight Time (17 hour difference)</div>
+            </div>
+
+            <div class="flight-item">
+                <div class="flight-details">
+                    <div class="flight-route">United SF → Chicago</div>
+                    <div class="status-badge status-confirmed">CONFIRMED</div>
+                </div>
+                <div class="flight-time">Depart: 6:00 AM PDT → Arrive: 2:40 PM CDT</div>
+                <div class="timezone-note">Pacific Daylight Time → Central Daylight Time</div>
+            </div>
+
+            <div class="flight-item">
+                <div class="flight-details">
+                    <div class="flight-route">Avelo Chicago → New Haven</div>
+                    <div class="status-badge status-confirmed">CONFIRMED</div>
+                </div>
+                <div class="flight-time">Depart: 7:00 PM CDT → Arrive: 9:15 PM EDT</div>
+                <div class="timezone-note">Central Daylight Time → Eastern Daylight Time</div>
+            </div>
+
+            <div class="flight-item">
+                <div class="flight-details">
+                    <div class="flight-route">United Newark → San Francisco</div>
+                    <div class="status-badge status-confirmed">CONFIRMED</div>
+                </div>
+                <div class="flight-time">Depart: 6:00 AM EDT → Arrive: 3:30 PM PDT</div>
+                <div class="timezone-note">Eastern Daylight Time → Pacific Daylight Time (4:00 AM pickup needed!)</div>
+            </div>
+
+            <div class="flight-item">
+                <div class="flight-details">
+                    <div class="flight-route">🇺🇸 QF74 San Francisco → Sydney 🇦🇺</div>
+                    <div class="status-badge status-confirmed">CONFIRMED</div>
+                </div>
+                <div class="flight-time">Depart: 10:30 PM PDT → Arrive: 6:00 AM AEST (+2 days)</div>
+                <div class="timezone-note">Pacific Daylight Time → Australian Standard Time (cross International Date Line)</div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button class="btn" onclick="showTransportSummary()">🚗 Transport Summary</button>
+            <button class="btn secondary" onclick="showActionItems()">⚠️ Action Items</button>
+            <button class="btn secondary" onclick="window.open('https://docs.google.com/document/d/1qHUQh-u84Vgn8DwZYPOprW0t0KhIc4duEeoOsfXKQMU/edit', '_blank')">📝 Family Google Doc</button>
+        </div>
+
+        <div class="github-info">
+            <h4>🔧 GitHub Integration Options:</h4>
+            <p><strong>For you:</strong> Version control, automated deployments, backup<br>
+            <strong>For family:</strong> Simple Google Doc editing (they don't need GitHub access)<br>
+            <strong>Sync option:</strong> GitHub Actions can automatically update from Google Sheets</p>
+            
+            <div style="margin-top: 10px;">
+                <button class="btn" onclick="showGitHubSetup()">Setup GitHub Project</button>
+                <button class="btn secondary" onclick="showSyncOptions()">Explore Auto-Sync</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTransportSummary() {
+            alert(`🚗 TRANSPORT SUMMARY:
+
+Critical Early Pickups:
+🚨 4:00 AM EDT - Stamford to Newark Airport (June 1)
+🚨 9:15 PM EDT - Family pickup at Tweed Airport (May 22)
+
+Airport Connections:
+• Sydney: Train to Central → Airport Link to SYD T1  
+• San Francisco: BART downtown ↔ SFO
+• Chicago: Blue Line L train ORD ↔ downtown
+• Midway: Orange Line L train downtown ↔ MDW
+
+NYC/CT Transport:
+• Metro North: Stamford ↔ Grand Central
+• DC Road Trip: 5-hour drive each way
+
+⚠️ BOOK NOW: 4:00 AM car service to Newark!`);
+        }
+
+        function showActionItems() {
+            alert(`⚠️ ACTION ITEMS NEEDED:
+
+URGENT:
+🔴 QF73 Sydney→SF: Confirm waitlist status
+🔴 4:00 AM car to Newark: Book pre-arranged service  
+🔴 Tweed Airport pickup: Confirm family member
+🔴 DC accommodation: Book hotel near monuments
+
+MEDIUM PRIORITY:
+🟡 Circles Retreat venue: Get Chicago location details
+🟡 LUMA Event: Confirm Upper West Side address
+🟡 Max show: Confirm theater and showtime
+
+NICE TO HAVE:
+🟢 SF layover: Plan city exploration or airport rest
+🟢 DC itinerary: Plan museum and monument visits`);
+        }
+
+        function showGitHubSetup() {
+            alert(`🚀 GITHUB PROJECT SETUP:
+
+Repository Structure:
+📁 julie-us-trip-2026/
+  ├── 📄 index.html (trip app)
+  ├── 📄 README.md (family instructions)  
+  ├── 📊 data/trip-data.json
+  ├── 🔧 .github/workflows/sync.yml
+  └── 📝 docs/
+
+Benefits:
+✅ Free hosting via GitHub Pages
+✅ Version control for all changes
+✅ Automatic backups
+✅ Professional URL: username.github.io/julie-us-trip-2026
+
+Next Steps:
+1. Create repository
+2. Upload trip files  
+3. Enable GitHub Pages
+4. Set up Google Sheets sync (optional)`);
+        }
+
+        function showSyncOptions() {
+            alert(`⚙️ AUTO-SYNC OPTIONS:
+
+Google Sheets → GitHub:
+• Family edits simple Google Doc
+• GitHub Actions reads changes
+• Auto-rebuilds trip app
+• Deploys updated version
+
+Setup Requirements:
+1. Google Sheets API access
+2. GitHub Actions workflow
+3. Service account credentials
+
+Workflow:
+📝 Family edits Google Doc
+⬇️ GitHub Actions detects changes
+🔄 Fetches updated data
+🚀 Rebuilds and deploys app
+✅ Live app updates automatically
+
+Time investment: ~2 hours setup
+Maintenance: Nearly zero
+
+Want me to help set this up?`);
+        }
+    </script>
+</body>
+</html>

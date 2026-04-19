@@ -1,0 +1,132 @@
+{
+  "trip": {
+    "title": "Julie's US Trip 2026",
+    "startDate": "2026-05-15",
+    "endDate": "2026-06-02",
+    "timeZoneNote": "Australia: Standard Time, US: Daylight Saving Time"
+  },
+  "flights": [
+    {
+      "id": "qf73",
+      "airline": "Qantas",
+      "flightNumber": "QF73",
+      "route": "Sydney → San Francisco", 
+      "date": "2026-05-15",
+      "departureTime": "9:25 PM AEST",
+      "arrivalTime": "4:15 PM PDT",
+      "status": "waitlisted",
+      "departureAirport": "Sydney Kingsford Smith (SYD) Terminal 1",
+      "arrivalAirport": "San Francisco International (SFO) Terminal I",
+      "transport": "Train to Central then Airport Link to SYD Terminal 1"
+    },
+    {
+      "id": "united-sf-chicago", 
+      "airline": "United Airlines",
+      "route": "San Francisco → Chicago",
+      "date": "2026-05-19",
+      "departureTime": "6:00 AM PDT", 
+      "arrivalTime": "2:40 PM CDT",
+      "status": "confirmed",
+      "departureAirport": "San Francisco International (SFO) Terminal 3",
+      "arrivalAirport": "Chicago O'Hare (ORD)",
+      "transport": "BART train from SF downtown to SFO Terminal 3"
+    },
+    {
+      "id": "avelo-chicago-newhaven",
+      "airline": "Avelo Airlines", 
+      "flightNumber": "XP422",
+      "route": "Chicago → New Haven",
+      "date": "2026-05-22",
+      "departureTime": "7:00 PM CDT",
+      "arrivalTime": "9:15 PM EDT", 
+      "status": "confirmed",
+      "departureAirport": "Chicago Midway (MDW)",
+      "arrivalAirport": "Tweed New Haven Regional (HVN)",
+      "transport": "Orange Line L train from downtown to Midway"
+    },
+    {
+      "id": "united-newark-sf",
+      "airline": "United Airlines",
+      "route": "Newark → San Francisco", 
+      "date": "2026-06-01",
+      "departureTime": "6:00 AM EDT",
+      "arrivalTime": "3:30 PM PDT",
+      "status": "confirmed", 
+      "departureAirport": "Newark Liberty International (EWR) Terminal C",
+      "arrivalAirport": "San Francisco International (SFO)",
+      "transport": "Pre-arranged car service needed for 4:00 AM pickup"
+    },
+    {
+      "id": "qf74",
+      "airline": "Qantas",
+      "flightNumber": "QF74", 
+      "route": "San Francisco → Sydney",
+      "date": "2026-06-02",
+      "departureTime": "10:30 PM PDT",
+      "arrivalTime": "6:00 AM AEST+2",
+      "status": "confirmed",
+      "departureAirport": "San Francisco International (SFO) Terminal I", 
+      "arrivalAirport": "Sydney Kingsford Smith (SYD) Terminal 1",
+      "transport": "BART back to SFO for red-eye departure"
+    }
+  ],
+  "actionItems": [
+    {
+      "id": "qf73-waitlist",
+      "priority": "urgent",
+      "task": "Confirm QF73 Sydney→SF flight waitlist status",
+      "deadline": "ASAP",
+      "assignee": "Julie"
+    },
+    {
+      "id": "newark-transport",
+      "priority": "urgent", 
+      "task": "Book 4:00 AM car service to Newark Airport",
+      "deadline": "1 week before travel",
+      "assignee": "Julie"
+    },
+    {
+      "id": "tweed-pickup",
+      "priority": "urgent",
+      "task": "Confirm family pickup at Tweed Airport 9:15 PM EDT", 
+      "deadline": "1 week before travel",
+      "assignee": "Family"
+    },
+    {
+      "id": "dc-hotel",
+      "priority": "high",
+      "task": "Book DC accommodation near monuments",
+      "deadline": "2 weeks before travel", 
+      "assignee": "Julie"
+    }
+  ],
+  "events": [
+    {
+      "id": "aussie-american-bay",
+      "title": "Aussie American in the Bay",
+      "date": "2026-05-16", 
+      "time": "5:00 PM PDT",
+      "location": "Presidio Park → BATS Improv",
+      "type": "event",
+      "status": "confirmed"
+    },
+    {
+      "id": "circles-retreat",
+      "title": "Circles Retreat",
+      "date": "2026-05-20",
+      "time": "9:00 AM CDT", 
+      "location": "Chicago TBD",
+      "type": "work",
+      "status": "planned"
+    },
+    {
+      "id": "luma-nyc",
+      "title": "LUMA Event - Upper West Side",
+      "date": "2026-05-26",
+      "time": "7:00 PM EDT",
+      "location": "NYC location TBD", 
+      "type": "event", 
+      "status": "confirmed"
+    }
+  ]
+}
