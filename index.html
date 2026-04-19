@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Julie's Complete US Trip 2026</title>
+    <title>Julie's US Trip 2026 - Live Sync</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,7 +13,7 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
             line-height: 1.6;
             color: #333;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -38,28 +39,6 @@
             overflow: hidden;
         }
         
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: repeating-linear-gradient(
-                45deg,
-                transparent,
-                transparent 10px,
-                rgba(255,255,255,0.1) 10px,
-                rgba(255,255,255,0.1) 20px
-            );
-            animation: slide 20s linear infinite;
-        }
-        
-        @keyframes slide {
-            0% { transform: translateX(-50%); }
-            100% { transform: translateX(50%); }
-        }
-        
         .header h1 {
             font-size: 3em;
             margin-bottom: 10px;
@@ -72,6 +51,62 @@
             opacity: 0.9;
             position: relative;
             z-index: 2;
+        }
+
+        .sync-status {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px;
+            border-left: 4px solid #4caf50;
+            text-align: center;
+        }
+
+        .sync-status h3 {
+            color: #2e7d32;
+            margin-bottom: 5px;
+        }
+
+        .accommodation-info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .accommodation-info h3 {
+            color: #1565c0;
+            margin-bottom: 10px;
+        }
+
+        .event-links {
+            background: #f3e5f5;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px;
+            border-left: 4px solid #9c27b0;
+        }
+
+        .event-links h3 {
+            color: #7b1fa2;
+            margin-bottom: 10px;
+        }
+
+        .event-links a {
+            display: inline-block;
+            background: #9c27b0;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            margin: 5px 10px 5px 0;
+            font-size: 0.9em;
+            transition: background 0.3s;
+        }
+
+        .event-links a:hover {
+            background: #7b1fa2;
         }
         
         .controls {
@@ -106,6 +141,10 @@
             background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
             color: #333;
         }
+
+        .btn.success {
+            background: linear-gradient(135deg, #4caf50 0%, #8bc34a 100%);
+        }
         
         .trip-section {
             margin: 20px;
@@ -113,11 +152,6 @@
             border-radius: 12px;
             overflow: hidden;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .trip-section:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
         
         .section-header {
@@ -149,11 +183,6 @@
             align-items: flex-start;
             gap: 15px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-        
-        .event-item:hover {
-            transform: translateX(5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
         
         .event-item.action-needed {
@@ -227,11 +256,11 @@
         .work-badge { background: #673ab7; color: white; }
         .flight-badge { background: #00bcd4; color: white; }
         .event-badge { background: #ff9800; color: white; }
+        .accommodation-badge { background: #009688; color: white; }
         .family-badge { background: #795548; color: white; }
         .social-badge { background: #607d8b; color: white; }
         .travel-badge { background: #3f51b5; color: white; }
         .tourism-badge { background: #ff5722; color: white; }
-        .accommodation-badge { background: #009688; color: white; }
         
         .transport-info {
             background: #e8f5e8;
@@ -254,15 +283,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        .transport-label {
-            font-weight: bold;
-            color: #2e7d32;
-            margin-bottom: 5px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
         .expand-toggle {
             background: none;
             border: none;
@@ -273,681 +293,131 @@
             text-decoration: underline;
             margin-top: 8px;
         }
-        
-        .expand-toggle:hover {
-            color: #1b5e20;
+
+        .event-link {
+            display: inline-block;
+            background: #9c27b0;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-size: 0.8em;
+            margin-top: 8px;
+            margin-right: 8px;
+            transition: background 0.3s;
         }
-        
-        .progress-container {
+
+        .event-link:hover {
+            background: #7b1fa2;
+            text-decoration: none;
+            color: white;
+        }
+
+        .setup-instructions {
+            background: #fff3e0;
             padding: 20px;
+            border-radius: 8px;
+            margin: 20px;
+            border-left: 4px solid #ff9800;
+        }
+
+        .setup-instructions h3 {
+            color: #ef6c00;
+            margin-bottom: 15px;
+        }
+
+        .setup-step {
+            margin-bottom: 10px;
+            padding: 8px 0;
+        }
+
+        .loading {
             text-align: center;
-        }
-        
-        .progress-bar {
-            background: #e0e0e0;
-            border-radius: 10px;
-            height: 10px;
-            margin: 20px 0;
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            background: linear-gradient(135deg, #4caf50 0%, #8bc34a 100%);
-            height: 100%;
-            width: 0%;
-            transition: width 0.8s ease;
-        }
-        
-        .quick-stats {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin: 15px 0;
-            font-size: 0.9em;
-        }
-        
-        .quick-stat {
-            background: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            border: 1px solid #ddd;
-            font-weight: bold;
+            padding: 40px;
+            color: #666;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>✈️ Julie's Complete US Adventure</h1>
-            <div class="dates">May 15 - June 2, 2026 • Full Itinerary with Times & Transport</div>
+            <h1>✈️ Julie's US Trip 2026</h1>
+            <div class="dates">May 15 - June 2, 2026 • Google Sheets Auto-Sync</div>
+        </div>
+
+        <div class="sync-status">
+            <h3>🔄 Google Sheets Auto-Sync Ready!</h3>
+            <p>Updates automatically every 30 minutes when you edit the spreadsheet</p>
+        </div>
+
+        <div class="accommodation-info">
+            <h3>🏠 San Francisco Base:</h3>
+            <p><strong>1920 Filbert St, Apartment C</strong><br>
+            Walking distance to Presidio for events! Perfect location.</p>
+        </div>
+
+        <div class="event-links">
+            <h3>🎭 Direct Event Links:</h3>
+            <a href="https://luma.com/y6sl48ni" target="_blank">📅 LUMA Event (May 26)</a>
+            <a href="https://www.eventbrite.com/e/bats-improv-presents-much-ado-about-everything-5226-5926-51626-tickets-1984432163019?aff=ebdsoporgprofile" target="_blank">🎪 BATS Improv Show</a>
+        </div>
+
+        <div class="setup-instructions">
+            <h3>⚡ Setup Instructions for Auto-Sync</h3>
+            <div class="setup-step"><strong>Step 1:</strong> Add data to your Google Sheet (link below)</div>
+            <div class="setup-step"><strong>Step 2:</strong> Upload this HTML file + sync-from-sheets.yml to GitHub</div>
+            <div class="setup-step"><strong>Step 3:</strong> Add GOOGLE_SHEETS_API_KEY secret to GitHub repository</div>
+            <div class="setup-step"><strong>Step 4:</strong> Enable GitHub Pages and GitHub Actions</div>
+            <div class="setup-step"><strong>Result:</strong> Family edits sheet → Auto-updates website!</div>
         </div>
         
         <div class="controls">
-            <button class="btn" onclick="showFlightSummary()">✈️ Flight Schedule</button>
-            <button class="btn secondary" onclick="showActionItems()">⚠️ Action Items</button>
-            <button class="btn secondary" onclick="expandAllTransport()">🗺️ Show All Transport</button>
+            <button class="btn success" onclick="window.open('https://docs.google.com/spreadsheets/d/1bsri9oEnubWAkZ5cXtrweNRjPncWXt4jXFQ5HSUSDCY/edit', '_blank')">📊 Edit Google Sheet</button>
             <button class="btn secondary" onclick="window.open('https://docs.google.com/document/d/1qHUQh-u84Vgn8DwZYPOprW0t0KhIc4duEeoOsfXKQMU/edit', '_blank')">📝 Family Google Doc</button>
+            <button class="btn secondary" onclick="testSync()">🔄 Test Sync</button>
+            <button class="btn secondary" onclick="showSetupGuide()">⚙️ Setup Guide</button>
         </div>
         
         <div id="content">
             <div id="tripContent">
-                <!-- Sydney → San Francisco → Chicago Section -->
-                <div class="trip-section">
-                    <div class="section-header">
-                        <span>✈️ May 15-19: Sydney → San Francisco → Chicago</span>
-                        <span>4 items</span>
-                    </div>
-                    <div class="section-content">
-                        <!-- QF73 Sydney to SF -->
-                        <div class="event-item waitlisted" onclick="toggleTransport(0)">
-                            <div class="event-icon">✈️</div>
-                            <div class="event-content">
-                                <div class="event-title">QF73 Sydney to San Francisco</div>
-                                <div class="event-details">Depart 9:25 PM Sydney arrive 4:15 PM SF same day</div>
-                                <div class="event-badges">
-                                    <span class="badge time-badge">🕐 9:25 PM AEST</span>
-                                    <span class="badge date-badge">May 15</span>
-                                    <span class="badge flight-badge">Flight</span>
-                                    <span class="badge waitlist-badge">Waitlisted</span>
-                                    <span class="badge action-badge">⚠️ Action Needed</span>
-                                    <span class="badge location-badge">Qantas</span>
-                                </div>
-                                <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(0)">
-                                    🚗 Show transport details
-                                </button>
-                                <div class="transport-info" id="transport-0">
-                                    <div class="transport-label">🗺️ How to get there:</div>
-                                    <div><strong>Address:</strong> Sydney Kingsford Smith Airport (SYD) Terminal 1</div>
-                                    <div><strong>Transport:</strong> Train to Central then Airport Link train to SYD Terminal 1</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Aussie American Picnic -->
-                        <div class="event-item" onclick="toggleTransport(1)">
-                            <div class="event-icon">🎭</div>
-                            <div class="event-content">
-                                <div class="event-title">Aussie American in the Bay - Picnic</div>
-                                <div class="event-details">Picnic in beautiful Presidio park</div>
-                                <div class="event-badges">
-                                    <span class="badge time-badge">🕐 5:00 PM PDT</span>
-                                    <span class="badge date-badge">May 16</span>
-                                    <span class="badge event-badge">Event</span>
-                                    <span class="badge status-badge">Confirmed</span>
-                                    <span class="badge location-badge">Presidio</span>
-                                </div>
-                                <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(1)">
-                                    🚗 Show transport details
-                                </button>
-                                <div class="transport-info" id="transport-1">
-                                    <div class="transport-label">🗺️ How to get there:</div>
-                                    <div><strong>Address:</strong> Presidio Park - Main Post Lawn SF</div>
-                                    <div><strong>Transport:</strong> Walk/Uber from downtown SF hotels</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Improv Show -->
-                        <div class="event-item" onclick="toggleTransport(2)">
-                            <div class="event-icon">🎭</div>
-                            <div class="event-content">
-                                <div class="event-title">Aussie American in the Bay - Improv Show</div>
-                                <div class="event-details">Comedy improv after picnic</div>
-                                <div class="event-badges">
-                                    <span class="badge time-badge">🕐 7:30 PM PDT</span>
-                                    <span class="badge date-badge">May 16</span>
-                                    <span class="badge event-badge">Event</span>
-                                    <span class="badge status-badge">Confirmed</span>
-                                    <span class="badge location-badge">BATS Improv</span>
-                                </div>
-                                <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(2)">
-                                    🚗 Show transport details
-                                </button>
-                                <div class="transport-info" id="transport-2">
-                                    <div class="transport-label">🗺️ How to get there:</div>
-                                    <div><strong>Address:</strong> BATS Improv - 3153 17th St San Francisco</div>
-                                    <div><strong>Transport:</strong> Walk from Presidio or direct transport</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- United SF to Chicago -->
-                        <div class="event-item" onclick="toggleTransport(3)">
-                            <div class="event-icon">✈️</div>
-                            <div class="event-content">
-                                <div class="event-title">United SF to Chicago</div>
-                                <div class="event-details">Early departure - arrive Chicago 2:40 PM CDT</div>
-                                <div class="event-badges">
-                                    <span class="badge time-badge">🕐 6:00 AM PDT</span>
-                                    <span class="badge date-badge">May 19</span>
-                                    <span class="badge flight-badge">Flight</span>
-                                    <span class="badge status-badge">Confirmed</span>
-                                    <span class="badge location-badge">United Airlines</span>
-                                </div>
-                                <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(3)">
-                                    🚗 Show transport details
-                                </button>
-                                <div class="transport-info" id="transport-3">
-                                    <div class="transport-label">🗺️ How to get there:</div>
-                                    <div><strong>Address:</strong> San Francisco International Airport (SFO) Terminal 3</div>
-                                    <div><strong>Transport:</strong> BART train from SF downtown to SFO Terminal 3</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Chicago Section -->
-                <div class="trip-section">
-                    <div class="section-header">
-                        <span>🏙️ May 19-22: Chicago</span>
-                        <span>4 items</span>
-                    </div>
-                    <div class="section-content">
-                        <!-- Chicago Hotel -->
-                        <div class="event-item" onclick="toggleTransport(4)">
-                            <div class="event-icon">🏨</div>
-                            <div class="event-content">
-                                <div class="event-title">Chicago Hotel Check-in</div>
-                                <div class="event-details">Stylish hotel in River North district</div>
-                                <div class="event-badges">
-                                    <span class="badge time-badge">🕐 3:00 PM CDT</span>
-                                    <span class="badge date-badge">May 19</span>
-                                    <span class="badge accommodation-badge">Accommodation</span>
-                                    <span class="badge status-badge">Confirmed</span>
-                                    <span class="badge location-badge">The Godfrey Hotel</span>
-                                </div>
-                                <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(4)">
-                                    🚗 Show transport details
-                                </button>
-                                <div class="transport-info" id="transport-4">
-                                    <div class="transport-label">🗺️ How to get there:</div>
-                                    <div><strong>Address:</strong> 127 W Huron St Chicago IL 60654</div>
-                                    <div><strong>Transport:</strong> Blue Line L train from ORD to Grand/Red Line</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Circles Retreat Day 1 -->
-                        <div class="event-item" onclick="toggleTransport(5)">
-                            <div class="event-icon">💼</div>
-                            <div class="event-content">
-                                <div class="event-title">Circles Retreat Day 1</div>
-                                <div class="event-details">Team building and strategy sessions</div>
-                                <div class="event-badges">
-                                    <span class="badge time-badge">🕐 9:00 AM CDT</span>
-                                    <span class="badge date-badge">May 20</span>
-                                    <span class="badge work-badge">Work</span>
-                                    <span class="badge location-badge">Chicago TBD</span>
-                                </div>
-                                <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(5)">
-                                    🚗 Show transport details
-                                </button>
-                                <div class="transport-info" id="transport-5">
-                                    <div class="transport-label">🗺️ How to get there:</div>
-                                    <div><strong>Address:</strong> TBD - Chicago venue</div>
-                                    <div><strong>Transport:</strong> Walk from hotel or arranged transport</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Team Dinner & Boat Tour -->
-                        <div class="event-item" onclick="toggleTransport(6)">
-                            <div class="event-icon">💼</div>
-                            <div class="event-content">
-                                <div class="event-title">Circles Retreat - Team Dinner & Boat Tour</div>
-                                <div class="event-details">Evening team bonding on Lake Michigan</div>
-                                <div class="event-badges">
-                                    <span class="badge time-badge">🕐 6:00 PM CDT</span>
-                                    <span class="badge date-badge">May 20</span>
-                                    <span class="badge work-badge">Work</span>
-                                    <span class="badge status-badge">Confirmed</span>
-                                    <span class="badge location-badge">Navy Pier</span>
-                                </div>
-                                <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(6)">
-                                    🚗 Show transport details
-                                </button>
-                                <div class="transport-info" id="transport-6">
-                                    <div class="transport-label">🗺️ How to get there:</div>
-                                    <div><strong>Address:</strong> Navy Pier 600 E Grand Ave Chicago IL</div>
-                                    <div><strong>Transport:</strong> Walk from downtown or team transport</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Avelo to New Haven -->
-                        <div class="event-item" onclick="toggleTransport(7)">
-                            <div class="event-icon">✈️</div>
-                            <div class="event-content">
-                                <div class="event-title">Avelo Chicago Midway to New Haven</div>
-                                <div class="event-details">Small airline direct to Tweed Airport 2.5hr flight</div>
-                                <div class="event-badges">
-                                    <span class="badge time-badge">🕐 7:00 PM CDT</span>
-                                    <span class="badge date-badge">May 22</span>
-                                    <span class="badge flight-badge">Flight</span>
-                                    <span class="badge status-badge">Confirmed</span>
-                                    <span class="badge location-badge">Avelo Airlines XP422</span>
-                                </div>
-                                <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(7)">
-                                    🚗 Show transport details
-                                </button>
-                                <div class="transport-info" id="transport-7">
-                                    <div class="transport-label">🗺️ How to get there:</div>
-                                    <div><strong>Address:</strong> Chicago Midway Airport (MDW)</div>
-                                    <div><strong>Transport:</strong> Orange Line L train from downtown to Midway</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Connecticut & East Coast Section -->
-                <div class="trip-section">
-                    <div class="section-header">
-                        <span>🦌 May 22 - June 1: Connecticut & East Coast</span>
-                        <span>11 items</span>
-                    </div>
-                    <div class="section-content">
-                        <!-- Tweed Pickup -->
-                        <div class="event-item action-needed" onclick="toggleTransport(8)">
-                            <div class="event-icon">🚗</div>
-                            <div class="event-content">
-                                <div class="event-title">Airport Pickup at Tweed</div>
-                                <div class="event-details">Someone needs to collect Julie from small airport</div>
-                                <div class="event-badges">
-                                    <span class="badge time-badge">🕐 9:15 PM EDT</span>
-                                    <span class="badge date-badge">May 22</span>
-                                    <span class="badge flight-badge">Transport</span>
-                                    <span class="badge action-badge">⚠️ Action Needed</span>
-                                    <span class="badge location-badge">Tweed Airport</span>
-                                </div>
-                                <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(8)">
-                                    🚗 Show transport details
-                                </button>
-                                <div class="transport-info" id="transport-8">
-                                    <div class="transport-label">🗺️ How to get there:</div>
-                                    <div><strong>Address:</strong> Tweed New Haven Regional Airport (HVN)</div>
-                                    <div><strong>Transport:</strong> Family pickup needed - confirm who and when</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Memorial Day Weekend -->
-                        <div class="event-item" onclick="toggleTransport(9)">
-                            <div class="event-icon">👨‍👩‍👧‍👦</div>
-                            <div class="event-content">
-                                <div class="event-title">Memorial Day Weekend</div>
-                                <div class="event-details">Family time with Mom - hoping for nice weather Sunday</div>
-                                <div class="event-badges">
-                                    <span class="badge time-badge">🕐 All weekend</span>
-                                    <span class="badge date-badge">May 25</span>
-                                    <span class="badge family-badge">Family</span>
-                                    <span class="badge location-badge">Stamford CT</span>
-                                </div>
-                                <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(9)">
-                                    🚗 Show transport details
-                                </button>
-                                <div class="transport-info" id="transport-9">
-                                    <div class="transport-label">🗺️ How to get there:</div>
-                                    <div><strong>Address:</strong> Stamford CT area</div>
-                                    <div><strong>Transport:</strong> Staying at family home</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- LUMA Event -->
-                        <div class="event-item" onclick="toggleTransport(10)">
-                            <div class="event-icon">🎭</div>
-                            <div class="event-content">
-                                <div class="event-title">Upper West Side LUMA Event</div>
-                                <div class="event-details">LUMA community gathering - networking event</div>
-                                <div class="event-badges">
-                                    <span class="badge time-badge">🕐 7:00 PM EDT</span>
-                                    <span class="badge date-badge">May 26</span>
-                                    <span class="badge event-badge">Event</span>
-                                    <span class="badge status-badge">Confirmed</span>
-                                    <span class="badge location-badge">NYC</span>
-                                </div>
-                                <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(10)">
-                                    🚗 Show transport details
-                                </button>
-                                <div class="transport-info" id="transport-10">
-                                    <div class="transport-label">🗺️ How to get there:</div>
-                                    <div><strong>Address:</strong> Upper West Side NYC location TBD</div>
-                                    <div><strong>Transport:</strong> Metro North train from Stamford to Grand Central then subway</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Show with Max -->
-                        <div class="event-item" onclick="toggleTransport(11)">
-                            <div class="event-icon">🤝</div>
-                            <div class="event-content">
-                                <div class="event-title">Show + Lunch with Max</div>
-                                <div class="event-details">Matinee show then lunch catch-up</div>
-                                <div class="event-badges">
-                                    <span class="badge time-badge">🕐 2:00 PM EDT</span>
-                                    <span class="badge date-badge">May 27</span>
-                                    <span class="badge social-badge">Social</span>
-                                    <span class="badge status-badge">Confirmed</span>
-                                    <span class="badge location-badge">NYC Theater</span>
-                                </div>
-                                <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(11)">
-                                    🚗 Show transport details
-                                </button>
-                                <div class="transport-info" id="transport-11">
-                                    <div class="transport-label">🗺️ How to get there:</div>
-                                    <div><strong>Address:</strong> TBD - NYC Theater District</div>
-                                    <div><strong>Transport:</strong> Metro North from Stamford to Grand Central</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Road Trip to DC -->
-                        <div class="event-item" onclick="toggleTransport(12)">
-                            <div class="event-icon">🗺️</div>
-                            <div class="event-content">
-                                <div class="event-title">Road Trip to Washington DC</div>
-                                <div class="event-details">5-hour drive through beautiful countryside</div>
-                                <div class="event-badges">
-                                    <span class="badge time-badge">🕐 10:00 AM EDT</span>
-                                    <span class="badge date-badge">May 28</span>
-                                    <span class="badge travel-badge">Travel</span>
-                                    <span class="badge location-badge">Interstate Drive</span>
-                                </div>
-                                <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(12)">
-                                    🚗 Show transport details
-                                </button>
-                                <div class="transport-info" id="transport-12">
-                                    <div class="transport-label">🗺️ How to get there:</div>
-                                    <div><strong>Address:</strong> Stamford CT to Washington DC</div>
-                                    <div><strong>Transport:</strong> Rental car or family car for 5-hour drive</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- DC Hotel -->
-                        <div class="event-item action-needed" onclick="toggleTransport(13)">
-                            <div class="event-icon">🏨</div>
-                            <div class="event-content">
-                                <div class="event-title">DC Accommodation Check-in</div>
-                                <div class="event-details">Need hotel near monuments and museums</div>
-                                <div class="event-badges">
-                                    <span class="badge time-badge">🕐 4:00 PM EDT</span>
-                                    <span class="badge date-badge">May 28</span>
-                                    <span class="badge accommodation-badge">Accommodation</span>
-                                    <span class="badge action-badge">⚠️ Action Needed</span>
-                                    <span class="badge location-badge">Washington DC</span>
-                                </div>
-                                <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(13)">
-                                    🚗 Show transport details
-                                </button>
-                                <div class="transport-info" id="transport-13">
-                                    <div class="transport-label">🗺️ How to get there:</div>
-                                    <div><strong>Address:</strong> Washington DC downtown area</div>
-                                    <div><strong>Transport:</strong> Drive to hotel after 5-hour road trip</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- DC Exploration -->
-                        <div class="event-item" onclick="toggleTransport(14)">
-                            <div class="event-icon">🗽</div>
-                            <div class="event-content">
-                                <div class="event-title">DC Exploration Days</div>
-                                <div class="event-details">Museums monuments and maybe see friends</div>
-                                <div class="event-badges">
-                                    <span class="badge time-badge">🕐 Full days</span>
-                                    <span class="badge date-badge">May 29</span>
-                                    <span class="badge tourism-badge">Tourism</span>
-                                    <span class="badge location-badge">Sightseeing</span>
-                                </div>
-                                <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(14)">
-                                    🚗 Show transport details
-                                </button>
-                                <div class="transport-info" id="transport-14">
-                                    <div class="transport-label">🗺️ How to get there:</div>
-                                    <div><strong>Address:</strong> Washington DC area</div>
-                                    <div><strong>Transport:</strong> Walking and Metro around DC</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Return Drive -->
-                        <div class="event-item" onclick="toggleTransport(15)">
-                            <div class="event-icon">🗺️</div>
-                            <div class="event-content">
-                                <div class="event-title">Return Drive to Stamford</div>
-                                <div class="event-details">Saturday morning departure to avoid traffic</div>
-                                <div class="event-badges">
-                                    <span class="badge time-badge">🕐 9:00 AM EDT</span>
-                                    <span class="badge date-badge">May 31</span>
-                                    <span class="badge travel-badge">Travel</span>
-                                    <span class="badge location-badge">Interstate Drive</span>
-                                </div>
-                                <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(15)">
-                                    🚗 Show transport details
-                                </button>
-                                <div class="transport-info" id="transport-15">
-                                    <div class="transport-label">🗺️ How to get there:</div>
-                                    <div><strong>Address:</strong> Washington DC to Stamford CT</div>
-                                    <div><strong>Transport:</strong> 5-hour drive back - avoid weekend traffic</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Newark Transport -->
-                        <div class="event-item action-needed" onclick="toggleTransport(16)">
-                            <div class="event-icon">🚗</div>
-                            <div class="event-content">
-                                <div class="event-title">Very Early Newark Transport</div>
-                                <div class="event-details">4:00 AM departure for 6:00 AM flight - very early!</div>
-                                <div class="event-badges">
-                                    <span class="badge time-badge">🕐 4:00 AM EDT</span>
-                                    <span class="badge date-badge">Jun 1</span>
-                                    <span class="badge flight-badge">Transport</span>
-                                    <span class="badge action-badge">⚠️ Action Needed</span>
-                                    <span class="badge location-badge">Rideshare/Car</span>
-                                </div>
-                                <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(16)">
-                                    🚗 Show transport details
-                                </button>
-                                <div class="transport-info" id="transport-16">
-                                    <div class="transport-label">🗺️ How to get there:</div>
-                                    <div><strong>Address:</strong> Stamford CT to Newark Airport (EWR)</div>
-                                    <div><strong>Transport:</strong> Pre-arranged car service needed for early departure</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Return Journey Section -->
-                <div class="trip-section">
-                    <div class="section-header">
-                        <span>✈️ June 1-2: Return Journey</span>
-                        <span>4 items</span>
-                    </div>
-                    <div class="section-content">
-                        <!-- Newark to SF -->
-                        <div class="event-item" onclick="toggleTransport(17)">
-                            <div class="event-icon">✈️</div>
-                            <div class="event-content">
-                                <div class="event-title">United Newark to San Francisco</div>
-                                <div class="event-details">Cross-country flight back to SF</div>
-                                <div class="event-badges">
-                                    <span class="badge time-badge">🕐 6:00 AM EDT</span>
-                                    <span class="badge date-badge">Jun 1</span>
-                                    <span class="badge flight-badge">Flight</span>
-                                    <span class="badge status-badge">Confirmed</span>
-                                    <span class="badge location-badge">United Airlines</span>
-                                </div>
-                                <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(17)">
-                                    🚗 Show transport details
-                                </button>
-                                <div class="transport-info" id="transport-17">
-                                    <div class="transport-label">🗺️ How to get there:</div>
-                                    <div><strong>Address:</strong> Newark Liberty International Airport (EWR) Terminal C</div>
-                                    <div><strong>Transport:</strong> Early check-in for 6AM departure</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- SF Layover -->
-                        <div class="event-item" onclick="toggleTransport(18)">
-                            <div class="event-icon">⏰</div>
-                            <div class="event-content">
-                                <div class="event-title">San Francisco Layover</div>
-                                <div class="event-details">One day to explore SF before red-eye to Sydney</div>
-                                <div class="event-badges">
-                                    <span class="badge time-badge">🕐 3:30 PM PDT</span>
-                                    <span class="badge date-badge">Jun 1</span>
-                                    <span class="badge flight-badge">Layover</span>
-                                    <span class="badge location-badge">SFO Airport</span>
-                                </div>
-                                <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(18)">
-                                    🚗 Show transport details
-                                </button>
-                                <div class="transport-info" id="transport-18">
-                                    <div class="transport-label">🗺️ How to get there:</div>
-                                    <div><strong>Address:</strong> San Francisco International Airport (SFO)</div>
-                                    <div><strong>Transport:</strong> BART into city for quick explore or rest at airport</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- QF74 to Sydney -->
-                        <div class="event-item" onclick="toggleTransport(19)">
-                            <div class="event-icon">✈️</div>
-                            <div class="event-content">
-                                <div class="event-title">QF74 San Francisco to Sydney</div>
-                                <div class="event-details">Depart 10:30 PM arrive Sydney 6:00 AM+2 days</div>
-                                <div class="event-badges">
-                                    <span class="badge time-badge">🕐 10:30 PM PDT</span>
-                                    <span class="badge date-badge">Jun 2</span>
-                                    <span class="badge flight-badge">Flight</span>
-                                    <span class="badge status-badge">Confirmed</span>
-                                    <span class="badge location-badge">Qantas Red-Eye</span>
-                                </div>
-                                <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(19)">
-                                    🚗 Show transport details
-                                </button>
-                                <div class="transport-info" id="transport-19">
-                                    <div class="transport-label">🗺️ How to get there:</div>
-                                    <div><strong>Address:</strong> San Francisco International Airport (SFO) Terminal I</div>
-                                    <div><strong>Transport:</strong> BART back to SFO for red-eye departure</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Arrive Home -->
-                        <div class="event-item" onclick="toggleTransport(20)">
-                            <div class="event-icon">🏠</div>
-                            <div class="event-content">
-                                <div class="event-title">Arrive Home Sydney</div>
-                                <div class="event-details">End of amazing US adventure!</div>
-                                <div class="event-badges">
-                                    <span class="badge time-badge">🕐 6:00 AM AEST+2</span>
-                                    <span class="badge date-badge">Jun 2</span>
-                                    <span class="badge status-badge">Confirmed</span>
-                                    <span class="badge location-badge">Home Sweet Home</span>
-                                </div>
-                                <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(20)">
-                                    🚗 Show transport details
-                                </button>
-                                <div class="transport-info" id="transport-20">
-                                    <div class="transport-label">🗺️ How to get there:</div>
-                                    <div><strong>Address:</strong> Sydney Kingsford Smith Airport (SYD) Terminal 1</div>
-                                    <div><strong>Transport:</strong> Train home to Rushcutters Bay with memories</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="loading">
+                    <h3>📊 Loading trip data from Google Sheets...</h3>
+                    <p>This will be replaced with live data from your spreadsheet</p>
+                    <br>
+                    <p><strong>Sample data structure:</strong></p>
+                    <p>Title | Details | Date | Time | Location | Status | Type | Links</p>
                 </div>
             </div>
             
-            <div class="progress-container" id="progressContainer">
-                <div class="quick-stats" id="quickStats">
-                    <div class="quick-stat">🚨 4 need action</div>
-                    <div class="quick-stat">⏳ 1 waitlisted</div>
-                    <div class="quick-stat">✅ 16 confirmed</div>
-                    <div class="quick-stat">✈️ 5 flights total</div>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill" style="width: 85%"></div>
-                </div>
-                <div id="progressText">
-                    <div style="font-size: 1.1em; margin-bottom: 5px;">85% Complete</div>
-                    <div style="font-size: 0.9em; color: #666;">16/21 items confirmed</div>
-                </div>
+            <div style="text-align: center; padding: 20px; color: #666;">
+                <p>✨ This app auto-updates from Google Sheets every 30 minutes</p>
+                <p>Last sync: <span id="lastSync">Not synced yet</span></p>
+                <p><strong>Sheet ID:</strong> 1bsri9oEnubWAkZ5cXtrweNRjPncWXt4jXFQ5HSUSDCY</p>
             </div>
         </div>
     </div>
 
     <script>
-        function toggleTransport(itemId) {
-            const transportDiv = document.getElementById(`transport-${itemId}`);
-            if (transportDiv) {
-                transportDiv.classList.toggle('show');
-            }
-        }
+        const SHEET_ID = '1bsri9oEnubWAkZ5cXtrweNRjPncWXt4jXFQ5HSUSDCY';
         
-        function expandAllTransport() {
-            const allTransports = document.querySelectorAll('.transport-info');
-            const isExpanded = Array.from(allTransports).some(transport => transport.classList.contains('show'));
-            
-            allTransports.forEach(transport => {
-                if (isExpanded) {
-                    transport.classList.remove('show');
-                } else {
-                    transport.classList.add('show');
-                }
-            });
+        function testSync() {
+            alert('🔄 Test Sync\n\nOnce GitHub Actions is set up, this will:\n\n1. Fetch data from Google Sheets\n2. Update this HTML file\n3. Commit changes to GitHub\n4. Deploy to GitHub Pages\n\nAll automatically every 30 minutes!');
         }
 
-        function showFlightSummary() {
-            alert(`✈️ FLIGHT SCHEDULE (Corrected Time Zones):
-
-QF73 Sydney → San Francisco
-• Depart: 9:25 PM AEST (May 15)
-• Arrive: 4:15 PM PDT (same day)  
-• Status: ⚠️ WAITLISTED - need confirmation!
-
-United San Francisco → Chicago  
-• Depart: 6:00 AM PDT (May 19)
-• Arrive: 2:40 PM CDT
-• Early morning - BART to SFO
-
-Avelo Chicago → New Haven
-• Depart: 7:00 PM CDT (May 22)
-• Arrive: 9:15 PM EDT
-• Small Tweed Airport - family pickup needed!
-
-United Newark → San Francisco
-• Depart: 6:00 AM EDT (Jun 1)
-• Arrive: 3:30 PM PDT
-• 4:00 AM car pickup - book now!
-
-QF74 San Francisco → Sydney
-• Depart: 10:30 PM PDT (Jun 2)
-• Arrive: 6:00 AM AEST+2`);
+        function showSetupGuide() {
+            window.open('https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions', '_blank');
         }
 
-        function showActionItems() {
-            alert(`⚠️ URGENT ACTION ITEMS:
-
-🔴 QF73 Waitlist: Check daily with Qantas
-🔴 4:00 AM Newark car: Book pre-arranged service  
-🔴 Tweed pickup: Confirm family member (9:15 PM)
-🔴 DC hotel: Book near National Mall
-
-🟡 Circles venue: Get Chicago location
-🟡 LUMA address: Confirm Upper West Side venue
-🟡 Max show: Confirm theater & time
-
-Family can help via Google Doc!`);
-        }
+        // Auto-sync every 10 minutes for testing (when live)
+        setInterval(() => {
+            console.log('Auto-sync check...');
+            document.getElementById('lastSync').textContent = new Date().toLocaleString();
+        }, 10 * 60 * 1000);
+        
+        // Set initial load time
+        window.addEventListener('load', () => {
+            document.getElementById('lastSync').textContent = new Date().toLocaleString();
+        });
     </script>
 </body>
 </html>
