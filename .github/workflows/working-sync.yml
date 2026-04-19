@@ -1,0 +1,199 @@
+name: Sync from Google Sheets
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+jobs:
+  sync-data:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: Sync from Google Sheets
+      env:
+        SHEET_ID: '1bsri9oEnubWAkZ5cXtrweNRjPncWXt4jXFQ5HSUSDCY'
+        API_KEY: ${{ secrets.GOOGLE_SHEETS_API_KEY }}
+      run: |
+        # Create sync script
+        cat > sync.js << 'EOF'
+        const https = require('https');
+        const fs = require('fs');
+        
+        const SHEET_ID = process.env.SHEET_ID;
+        const API_KEY = process.env.API_KEY;
+        
+        function makeRequest(url) {
+          return new Promise((resolve, reject) => {
+            https.get(url, (res) => {
+              let data = '';
+              res.on('data', chunk => data += chunk);
+              res.on('end', () => {
+                try {
+                  resolve(JSON.parse(data));
+                } catch (e) {
+                  reject(e);
+                }
+              });
+            }).on('error', reject);
+          });
+        }
+        
+        async function syncFromSheets() {
+          try {
+            console.log('📊 Fetching from Google Sheets...');
+            
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/A:H?key=${API_KEY}`;
+            const data = await makeRequest(url);
+            
+            if (!data.values || data.values.length < 2) {
+              throw new Error('No data found in sheet');
+            }
+            
+            const [headers, ...rows] = data.values;
+            console.log(`📋 Found ${rows.length} events`);
+            
+            // Generate events HTML
+            let eventsHtml = '';
+            let eventCounter = 0;
+            
+            rows.forEach((row, index) => {
+              const [title, details, date, time, location, status, type, links] = row;
+              if (!title) return;
+              
+              const badges = [];
+              if (time) badges.push(`<span class="badge time-badge">🕐 ${time}</span>`);
+              if (date) badges.push(`<span class="badge date-badge">${date}</span>`);
+              
+              let statusClass = '';
+              if (status === 'Action Needed') {
+                badges.push(`<span class="badge action-badge">⚠️ ${status}</span>`);
+                statusClass = ' action-needed';
+              } else if (status === 'Waitlisted') {
+                badges.push(`<span class="badge waitlist-badge">${status}</span>`);
+                statusClass = ' waitlisted';
+              } else if (status) {
+                badges.push(`<span class="badge status-badge">${status}</span>`);
+              }
+              
+              if (type) badges.push(`<span class="badge ${type.toLowerCase()}-badge">${type}</span>`);
+              if (location) badges.push(`<span class="badge location-badge">${location}</span>`);
+              
+              const eventLinks = links ? 
+                links.split(',').map(link => 
+                  `<a href="${link.trim()}" target="_blank" class="event-link">🔗 Link</a>`
+                ).join('') : '';
+              
+              const icon = getIcon(type);
+              
+              eventsHtml += `
+                <div class="event-item${statusClass}" onclick="toggleTransport(${eventCounter})">
+                  <div class="event-icon">${icon}</div>
+                  <div class="event-content">
+                    <div class="event-title">${title}</div>
+                    <div class="event-details">${details || ''}</div>
+                    <div class="event-badges">${badges.join('')}</div>
+                    ${eventLinks}
+                    <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(${eventCounter})">
+                      🚗 Show transport details
+                    </button>
+                    <div class="transport-info" id="transport-${eventCounter}">
+                      <div><strong>Location:</strong> ${location || 'TBD'}</div>
+                      <div><strong>Transport:</strong> Details to be added</div>
+                    </div>
+                  </div>
+                </div>
+              `;
+              eventCounter++;
+            });
+            
+            // Read template
+            const template = fs.readFileSync('index.html', 'utf8');
+            
+            // Replace the trip content
+            const sectionHtml = `
+              <div class="trip-section">
+                <div class="section-header">
+                  <span>✈️ Julie's US Trip 2026 - Live from Google Sheets</span>
+                  <span>${rows.length} items</span>
+                </div>
+                <div class="section-content">
+                  ${eventsHtml}
+                </div>
+              </div>
+            `;
+            
+            const startMarker = '<div id="tripContent">';
+            const endMarker = '</div>\n            \n            <div class="progress-container"';
+            
+            const start = template.indexOf(startMarker);
+            const end = template.indexOf(endMarker);
+            
+            if (start === -1 || end === -1) {
+              throw new Error('Could not find tripContent markers in template');
+            }
+            
+            const newHtml = template.substring(0, start + startMarker.length) + 
+                            '\n' + sectionHtml + '\n            ' + 
+                            template.substring(end);
+            
+            // Update sync time
+            const syncTime = new Date().toLocaleString();
+            const finalHtml = newHtml.replace(
+              /Last sync: [^<]*/,
+              `Last sync: ${syncTime}`
+            );
+            
+            fs.writeFileSync('index.html', finalHtml);
+            
+            console.log('✅ Successfully updated index.html');
+            console.log(`🕒 Last sync: ${syncTime}`);
+            console.log(`📊 Processed ${rows.length} events`);
+            
+          } catch (error) {
+            console.error('❌ Sync failed:', error.message);
+            process.exit(1);
+          }
+        }
+        
+        function getIcon(type) {
+          const icons = {
+            'Flight': '✈️',
+            'Event': '🎭',
+            'Work': '💼',
+            'Accommodation': '🏠',
+            'Family': '👨‍👩‍👧‍👦',
+            'Social': '🤝',
+            'Travel': '🗺️',
+            'Tourism': '🗽',
+            'Transport': '🚗',
+            'Home': '🏠'
+          };
+          return icons[type] || '📅';
+        }
+        
+        syncFromSheets();
+        EOF
+        
+        # Run the sync
+        node sync.js
+        
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "Auto-Sync Bot"
+        git add index.html
+        if git diff --staged --quiet; then
+          echo "No changes to commit"
+        else
+          git commit -m "🔄 Auto-sync from Google Sheets $(date)"
+          git push
+          echo "✅ Changes pushed to GitHub"
+        fi
