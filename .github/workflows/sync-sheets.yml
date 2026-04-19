@@ -1,0 +1,114 @@
+name: Sync Google Sheets to GitHub
+
+on:
+  schedule:
+    # Run every hour to check for updates
+    - cron: '0 * * * *'
+  workflow_dispatch:  # Allow manual trigger
+  repository_dispatch: # Allow external trigger
+    types: [sheets-updated]
+
+jobs:
+  sync-sheets:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: Install dependencies
+      run: |
+        npm init -y
+        npm install googleapis@latest
+        
+    - name: Sync Google Sheets
+      env:
+        GOOGLE_SHEETS_API_KEY: ${{ secrets.GOOGLE_SHEETS_API_KEY }}
+        GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}
+      run: |
+        cat > sync-sheets.js << 'SCRIPT'
+        const { google } = require('googleapis');
+        const fs = require('fs');
+        
+        async function syncSheets() {
+          try {
+            const sheets = google.sheets({
+              version: 'v4',
+              auth: process.env.GOOGLE_SHEETS_API_KEY
+            });
+            
+            const response = await sheets.spreadsheets.values.get({
+              spreadsheetId: process.env.GOOGLE_SHEET_ID,
+              range: 'A:I', // Include Time and Address columns
+            });
+            
+            const rows = response.data.values;
+            if (!rows || rows.length < 2) {
+              console.log('No data found in spreadsheet');
+              return;
+            }
+            
+            // Convert sheet data to JSON
+            const headers = rows[0];
+            const tripData = rows.slice(1).map(row => {
+              const item = {};
+              headers.forEach((header, index) => {
+                item[header.toLowerCase().replace(/\s+/g, '_')] = row[index] || '';
+              });
+              return item;
+            });
+            
+            // Update trip data file
+            const currentData = JSON.parse(fs.readFileSync('data/trip-data.json', 'utf8'));
+            currentData.lastSync = new Date().toISOString();
+            currentData.sheetData = tripData;
+            
+            fs.writeFileSync('data/trip-data.json', JSON.stringify(currentData, null, 2));
+            
+            console.log(`Synced ${tripData.length} items from Google Sheets`);
+            
+            // Check if there are changes to commit
+            const { exec } = require('child_process');
+            exec('git diff --exit-code', (error) => {
+              if (error) {
+                console.log('Changes detected, will commit');
+                process.exit(0); // Continue to commit step
+              } else {
+                console.log('No changes detected');
+                process.exit(78); // Skip commit step
+              }
+            });
+            
+          } catch (error) {
+            console.error('Error syncing sheets:', error.message);
+            process.exit(1);
+          }
+        }
+        
+        syncSheets();
+        SCRIPT
+        
+        node sync-sheets.js
+        
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add data/trip-data.json
+        git diff --staged --quiet || (
+          git commit -m "🔄 Auto-sync from Google Sheets - $(date)" &&
+          git push
+        )
+
+    - name: Deploy to GitHub Pages
+      if: github.ref == 'refs/heads/main'
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./
+        publish_branch: gh-pages
