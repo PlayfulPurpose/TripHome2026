@@ -139,24 +139,58 @@ jobs:
               const firstLink = event.links.split(',')[0];
               const icon = event.title.includes('Picnic') ? '📅' : 
                           event.title.includes('Improv') ? '🎪' : 
-                          event.title.includes('Birthday') || event.title.includes('BDAY') ? '🥂' : '🎭';
-              return `<a href="${firstLink.trim()}" target="_blank">${icon} ${event.title} - ${event.location}</a>`;
+                          event.title.includes('Birthday') || event.title.includes('BDAY') ? '🥂' : 
+                          event.title.includes('Memorial') ? '🇺🇸' : '🎭';
+              
+              // Clean up location - just take the main part before commas/details
+              const cleanLocation = event.location.split(',')[0].replace(/^\s*"?\s*/, '').replace(/\s*"?\s*$/, '');
+              const shortTitle = event.title.replace('Aussie American in the Bay - ', '').replace('Trell Cousins Early BDAY drinks Upper West Side', 'Trell Cousins Birthday');
+              
+              return `<a href="${firstLink.trim()}" target="_blank">${icon} ${shortTitle} - ${cleanLocation} (${event.date})</a>`;
             }).join('\\n            ');
             
-            // Generate segmented sections
-            const segmentOrder = ['SF', 'Chicago', 'East Coast'];
+            // Generate segmented sections - SORT BY DATE
+            const segmentOrder = ['San Francisco', 'Chicago', 'East Coast', 'East Coast - NY/CT/DC']; // Handle both formats
             const segmentEmojis = {
+              'San Francisco': '🌉 San Francisco',
               'SF': '🌉 San Francisco',
               'Chicago': '🏙️ Chicago', 
-              'East Coast': '🗽 East Coast (NY/CT/DC)'
+              'East Coast': '🗽 East Coast (NY/CT/DC)',
+              'East Coast - NY/CT/DC': '🗽 East Coast (NY/CT/DC)'
             };
             
             let sectionsHtml = '';
             let globalEventCounter = 0;
             
-            segmentOrder.forEach(segmentKey => {
+            // Sort segments by earliest date in each segment
+            const segmentDates = {};
+            Object.keys(segments).forEach(segmentKey => {
               if (segments[segmentKey] && segments[segmentKey].length > 0) {
-                const segmentTitle = segmentEmojis[segmentKey] || segmentKey;
+                // Find earliest date in this segment
+                const dates = rows.filter(row => {
+                  const [title, details, date, time, location, status, type, links, host, segment] = row;
+                  return (segment || 'Other') === segmentKey && date;
+                }).map(row => {
+                  const [title, details, date] = row;
+                  return new Date(date + ', 2026'); // Add year for proper sorting
+                });
+                
+                if (dates.length > 0) {
+                  segmentDates[segmentKey] = Math.min(...dates.map(d => d.getTime()));
+                } else {
+                  segmentDates[segmentKey] = new Date().getTime(); // Default to now if no dates
+                }
+              }
+            });
+            
+            // Sort segment keys by date
+            const sortedSegmentKeys = Object.keys(segments).sort((a, b) => {
+              return (segmentDates[a] || 0) - (segmentDates[b] || 0);
+            });
+            
+            sortedSegmentKeys.forEach(segmentKey => {
+              if (segments[segmentKey] && segments[segmentKey].length > 0) {
+                const segmentTitle = segmentEmojis[segmentKey] || `📍 ${segmentKey}`;
                 const segmentEvents = segments[segmentKey].map(eventHtml => {
                   // Update event counter in the HTML
                   return eventHtml.replace(/toggleTransport\(\d+\)/g, () => {
@@ -170,31 +204,6 @@ jobs:
                   <div class="trip-section">
                     <div class="section-header">
                       <span>${segmentTitle}</span>
-                      <span>${segments[segmentKey].length} items</span>
-                    </div>
-                    <div class="section-content">
-                      ${segmentEvents}
-                    </div>
-                  </div>
-                `;
-              }
-            });
-            
-            // Handle remaining segments
-            Object.keys(segments).forEach(segmentKey => {
-              if (!segmentOrder.includes(segmentKey) && segments[segmentKey].length > 0) {
-                const segmentEvents = segments[segmentKey].map(eventHtml => {
-                  return eventHtml.replace(/toggleTransport\(\d+\)/g, () => {
-                    return `toggleTransport(${globalEventCounter++})`;
-                  }).replace(/transport-\d+/g, () => {
-                    return `transport-${globalEventCounter - 1}`;
-                  });
-                }).join('');
-                
-                sectionsHtml += `
-                  <div class="trip-section">
-                    <div class="section-header">
-                      <span>📍 ${segmentKey}</span>
                       <span>${segments[segmentKey].length} items</span>
                     </div>
                     <div class="section-content">
