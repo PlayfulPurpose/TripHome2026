@@ -50,7 +50,7 @@ jobs:
           try {
             console.log('📊 Fetching from Google Sheets...');
             
-            const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/A:H?key=${API_KEY}`;
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/A:I?key=${API_KEY}`;
             const data = await makeRequest(url);
             
             if (!data.values || data.values.length < 2) {
@@ -65,7 +65,7 @@ jobs:
             let eventCounter = 0;
             
             rows.forEach((row, index) => {
-              const [title, details, date, time, location, status, type, links] = row;
+              const [title, details, date, time, location, status, type, links, host] = row;
               if (!title) return;
               
               const badges = [];
@@ -91,6 +91,9 @@ jobs:
                   `<a href="${link.trim()}" target="_blank" class="event-link">🔗 Link</a>`
                 ).join('') : '';
               
+              // Add host info if available
+              const hostInfo = host ? `<div class="host-info">🏠 <strong>Host:</strong> ${host}</div>` : '';
+              
               const icon = getIcon(type);
               
               eventsHtml += `
@@ -100,6 +103,7 @@ jobs:
                     <div class="event-title">${title}</div>
                     <div class="event-details">${details || ''}</div>
                     <div class="event-badges">${badges.join('')}</div>
+                    ${hostInfo}
                     ${eventLinks}
                     <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(${eventCounter})">
                       🚗 Show transport details
@@ -107,6 +111,7 @@ jobs:
                     <div class="transport-info" id="transport-${eventCounter}">
                       <div><strong>Location:</strong> ${location || 'TBD'}</div>
                       <div><strong>Transport:</strong> Details to be added</div>
+                      ${host ? `<div><strong>Host:</strong> ${host}</div>` : ''}
                     </div>
                   </div>
                 </div>
