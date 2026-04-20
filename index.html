@@ -362,11 +362,7 @@
 
         <div class="event-links">
             <h3>🎭 Direct Event Links:</h3>
-            <a href="https://luma.com/y6sl48ni" target="_blank">📅 Picnic - Presidio Park (May 16)</a>   <br>         
-            <a href="https://www.eventbrite.com/e/bats-improv-presents-much-ado-about-everything-5226-5926-51626-tickets-1984432163019" target="_blank">🎪 BATS Improv Show - Fort Mason, SF (May 16)</a>    <br>
-            <a href="https://luma.com/92fiaehy" target="_blank"> 🧺 Memorial Day Gathering - Stamford (May 24)</a>         <br>
-            <a href="https://luma.com/y6sl48ni" target="_blank">🥂 Trell Cousins Birthday - Upper West Side, NYC (May 26)</a>
-        </div>
+    <a href="https://luma.com/y6sl48ni" target="_blank">📅 Picnic - Presidio Park (May 16)</a>   <br>         \n            <a href="https://www.eventbrite.com/e/bats-improv-presents-much-ado-about-everything-5226-5926-51626-tickets-1984432163019" target="_blank">🎪 BATS Improv Show - Fort Mason, SF (May 16)</a>   <br>         \n            <a href="https://luma.com/92fiaehy" target="_blank">🧺 Memorial Day Gathering - Stamford (May 24)</a>   <br>         \n            <a href="https://luma.com/y6sl48ni" target="_blank">🥂 Trell Cousins Birthday - Upper West Side, NYC (May 26)</a>   <br></div>
         
         <div class="controls">
             <button class="btn" onclick="showFlightSummary()">✈️ Flight Schedule</button>
@@ -376,10 +372,599 @@
         
         <div id="content">
             <div id="tripContent">
-                <div class="loading" style="text-align: center; padding: 40px; color: #666;">
-                    <h3>📊 Loading trip data from Google Sheets...</h3>
-                    <p>This will be replaced with live data from your spreadsheet</p>
-                </div>
+
+            <div class="trip-section">
+              <div class="section-header">
+                <span>✈️ Sydney - Departure</span>
+                <span>1 items</span>
+              </div>
+              <div class="section-content">
+                
+        <div class="event-item waitlisted" onclick="toggleTransport(0)">
+          <div class="event-icon">✈️</div>
+          <div class="event-content">
+            <div class="event-title">Sydney to San Francisco (QF73)</div>
+            <div class="event-details">Depart 9:25 PM Sydney arrive 3:55 PM SF same day</div>
+            <div class="event-badges"><span class="badge time-badge">🕐 9:25 PM AEST</span><span class="badge date-badge">May 15</span><span class="badge waitlist-badge">Waitlisted</span><span class="badge flight-badge">Flight</span><span class="badge location-badge">Sydney Airport T1</span></div>
+            
+            
+            <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(1)">
+              🚗 Show transport details
+            </button>
+            <div class="transport-info" id="transport-1">
+              <div><strong>Location:</strong> Sydney Airport T1</div>
+              <div><strong>Transport:</strong> Details to be added</div>
+              
+            </div>
+          </div>
+        </div>
+      
+              </div>
+            </div>
+          
+            <div class="trip-section">
+              <div class="section-header">
+                <span>🌉 San Francisco - Part 1</span>
+                <span>4 items</span>
+              </div>
+              <div class="section-content">
+                
+        <div class="event-item" onclick="toggleTransport(2)">
+          <div class="event-icon">🏠</div>
+          <div class="event-content">
+            <div class="event-title">San Francisco Accommodation Check-in</div>
+            <div class="event-details">1920 Filbert St Apartment C - Drew's place</div>
+            <div class="event-badges"><span class="badge time-badge">🕐 4:30 PM PDT</span><span class="badge date-badge">May 15</span><span class="badge status-badge">Confirmed</span><span class="badge accommodation-badge">Accommodation</span><span class="badge location-badge">1920 Filbert St Apt C</span></div>
+            <div class="host-info">🏠 <strong>Host:</strong> Drew</div>
+            
+            <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(3)">
+              🚗 Show transport details
+            </button>
+            <div class="transport-info" id="transport-3">
+              <div><strong>Location:</strong> 1920 Filbert St Apt C</div>
+              <div><strong>Transport:</strong> Details to be added</div>
+              <div><strong>Host:</strong> Drew</div>
+            </div>
+          </div>
+        </div>
+      
+        <div class="event-item" onclick="toggleTransport(4)">
+          <div class="event-icon">🎭</div>
+          <div class="event-content">
+            <div class="event-title">Aussie American in the Bay - Picnic</div>
+            <div class="event-details">Picnic in beautiful Presidio park - Food Truck pop up</div>
+            <div class="event-badges"><span class="badge time-badge">🕐 11:00 AM PDT</span><span class="badge date-badge">May 16</span><span class="badge status-badge">Confirmed</span><span class="badge event-badge">Event</span><span class="badge location-badge">Main Parade - Presidio Park</span></div>
+            
+            <a href="https://luma.com/y6sl48ni" target="_blank" class="event-link">🔗 Link</a>
+            <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(5)">
+              🚗 Show transport details
+            </button>
+            <div class="transport-info" id="transport-5">
+              <div><strong>Location:</strong> Main Parade - Presidio Park</div>
+              <div><strong>Transport:</strong> Details to be added</div>
+              
+            </div>
+          </div>
+        </div>
+      
+        <div class="event-item" onclick="toggleTransport(6)">
+          <div class="event-icon">🎭</div>
+          <div class="event-content">
+            <div class="event-title">BATS Improv Show</div>
+            <div class="event-details">Much Ado About Everything - comedy improv evening</div>
+            <div class="event-badges"><span class="badge time-badge">🕐 7:30 PM PDT</span><span class="badge date-badge">May 16</span><span class="badge status-badge">Confirmed</span><span class="badge event-badge">Event</span><span class="badge location-badge">Fort Mason, Landmark Building B, San Francisco, </span></div>
+            
+            <a href="https://www.eventbrite.com/e/bats-improv-presents-much-ado-about-everything-5226-5926-51626-tickets-1984432163019" target="_blank" class="event-link">🔗 Link</a>
+            <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(7)">
+              🚗 Show transport details
+            </button>
+            <div class="transport-info" id="transport-7">
+              <div><strong>Location:</strong> Fort Mason, Landmark Building B, San Francisco, </div>
+              <div><strong>Transport:</strong> Details to be added</div>
+              
+            </div>
+          </div>
+        </div>
+      
+        <div class="event-item" onclick="toggleTransport(8)">
+          <div class="event-icon">✈️</div>
+          <div class="event-content">
+            <div class="event-title">United SF to Chicago (UA2000)</div>
+            <div class="event-details">Early departure - arrive Chicago 11:55 AM CDT</div>
+            <div class="event-badges"><span class="badge time-badge">🕐 5:30 AM PDT</span><span class="badge date-badge">May 19</span><span class="badge status-badge">Confirmed</span><span class="badge flight-badge">Flight</span><span class="badge location-badge">SFO Terminal 3</span></div>
+            
+            
+            <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(9)">
+              🚗 Show transport details
+            </button>
+            <div class="transport-info" id="transport-9">
+              <div><strong>Location:</strong> SFO Terminal 3</div>
+              <div><strong>Transport:</strong> Details to be added</div>
+              
+            </div>
+          </div>
+        </div>
+      
+              </div>
+            </div>
+          
+            <div class="trip-section">
+              <div class="section-header">
+                <span>🏙️ Chicago</span>
+                <span>7 items</span>
+              </div>
+              <div class="section-content">
+                
+        <div class="event-item" onclick="toggleTransport(10)">
+          <div class="event-icon">🏠</div>
+          <div class="event-content">
+            <div class="event-title">Chicago Hotel Check-in</div>
+            <div class="event-details">The Godfrey Hotel - stylish River North district</div>
+            <div class="event-badges"><span class="badge time-badge">🕐 3:00 PM CDT</span><span class="badge date-badge">May 19</span><span class="badge status-badge">Confirmed</span><span class="badge accommodation-badge">Accommodation</span><span class="badge location-badge">127 W Huron St Chicago</span></div>
+            
+            
+            <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(11)">
+              🚗 Show transport details
+            </button>
+            <div class="transport-info" id="transport-11">
+              <div><strong>Location:</strong> 127 W Huron St Chicago</div>
+              <div><strong>Transport:</strong> Details to be added</div>
+              
+            </div>
+          </div>
+        </div>
+      
+        <div class="event-item" onclick="toggleTransport(12)">
+          <div class="event-icon">💼</div>
+          <div class="event-content">
+            <div class="event-title">Circles Retreat Boat Tour</div>
+            <div class="event-details">Architecture Boat Tour</div>
+            <div class="event-badges"><span class="badge time-badge">🕐 6:00 PM CDT</span><span class="badge date-badge">May 20</span><span class="badge status-badge">Confirmed</span><span class="badge work-badge">Work</span><span class="badge location-badge">400 North Michigan Avenue, Chicago</span></div>
+            
+            
+            <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(13)">
+              🚗 Show transport details
+            </button>
+            <div class="transport-info" id="transport-13">
+              <div><strong>Location:</strong> 400 North Michigan Avenue, Chicago</div>
+              <div><strong>Transport:</strong> Details to be added</div>
+              
+            </div>
+          </div>
+        </div>
+      
+        <div class="event-item" onclick="toggleTransport(14)">
+          <div class="event-icon">💼</div>
+          <div class="event-content">
+            <div class="event-title">Circles Retreat Dinner & Jelling</div>
+            <div class="event-details">Chilling at The Clayton</div>
+            <div class="event-badges"><span class="badge time-badge">🕐 7:30 PM CDT</span><span class="badge date-badge">May 20</span><span class="badge status-badge">Confirmed</span><span class="badge work-badge">Work</span><span class="badge location-badge">212 N Canal St</span></div>
+            
+            
+            <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(15)">
+              🚗 Show transport details
+            </button>
+            <div class="transport-info" id="transport-15">
+              <div><strong>Location:</strong> 212 N Canal St</div>
+              <div><strong>Transport:</strong> Details to be added</div>
+              
+            </div>
+          </div>
+        </div>
+      
+        <div class="event-item" onclick="toggleTransport(16)">
+          <div class="event-icon">💼</div>
+          <div class="event-content">
+            <div class="event-title">Circles Retreat Day 1</div>
+            <div class="event-details">Team building, Individula, and strategy sessions</div>
+            <div class="event-badges"><span class="badge time-badge">🕐 9:00 AM CDT</span><span class="badge date-badge">May 21</span><span class="badge status-badge">Confirmed</span><span class="badge work-badge">Work</span><span class="badge location-badge">515 N State St. #2300</span></div>
+            
+            
+            <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(17)">
+              🚗 Show transport details
+            </button>
+            <div class="transport-info" id="transport-17">
+              <div><strong>Location:</strong> 515 N State St. #2300</div>
+              <div><strong>Transport:</strong> Details to be added</div>
+              
+            </div>
+          </div>
+        </div>
+      
+        <div class="event-item" onclick="toggleTransport(18)">
+          <div class="event-icon">💼</div>
+          <div class="event-content">
+            <div class="event-title">Circles Retreat Social</div>
+            <div class="event-details">Chicago Food Tour</div>
+            <div class="event-badges"><span class="badge time-badge">🕐 6:00 PM CDT</span><span class="badge date-badge">May 21</span><span class="badge status-badge">Confirmed</span><span class="badge work-badge">Work</span><span class="badge location-badge">TBD</span></div>
+            
+            
+            <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(19)">
+              🚗 Show transport details
+            </button>
+            <div class="transport-info" id="transport-19">
+              <div><strong>Location:</strong> TBD</div>
+              <div><strong>Transport:</strong> Details to be added</div>
+              
+            </div>
+          </div>
+        </div>
+      
+        <div class="event-item" onclick="toggleTransport(20)">
+          <div class="event-icon">💼</div>
+          <div class="event-content">
+            <div class="event-title">Circles Retreat Day 2</div>
+            <div class="event-details">Team building, Individula, and strategy sessions</div>
+            <div class="event-badges"><span class="badge time-badge">🕐 9:00 AM CDT</span><span class="badge date-badge">May 22</span><span class="badge status-badge">Confirmed</span><span class="badge work-badge">Work</span><span class="badge location-badge">515 N State St. #2300</span></div>
+            
+            
+            <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(21)">
+              🚗 Show transport details
+            </button>
+            <div class="transport-info" id="transport-21">
+              <div><strong>Location:</strong> 515 N State St. #2300</div>
+              <div><strong>Transport:</strong> Details to be added</div>
+              
+            </div>
+          </div>
+        </div>
+      
+        <div class="event-item" onclick="toggleTransport(22)">
+          <div class="event-icon">✈️</div>
+          <div class="event-content">
+            <div class="event-title">Avelo Chicago to New Haven (XP 422)</div>
+            <div class="event-details">Small airline direct to Tweed Airport - 2.5hr flight</div>
+            <div class="event-badges"><span class="badge time-badge">🕐 7:00 PM CDT</span><span class="badge date-badge">May 22</span><span class="badge status-badge">Confirmed</span><span class="badge flight-badge">Flight</span><span class="badge location-badge">Chicago Midway Airport</span></div>
+            
+            
+            <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(23)">
+              🚗 Show transport details
+            </button>
+            <div class="transport-info" id="transport-23">
+              <div><strong>Location:</strong> Chicago Midway Airport</div>
+              <div><strong>Transport:</strong> Details to be added</div>
+              
+            </div>
+          </div>
+        </div>
+      
+              </div>
+            </div>
+          
+            <div class="trip-section">
+              <div class="section-header">
+                <span>🗽 East Coast (NY/CT/DC)</span>
+                <span>12 items</span>
+              </div>
+              <div class="section-content">
+                
+        <div class="event-item action-needed" onclick="toggleTransport(24)">
+          <div class="event-icon">🚗</div>
+          <div class="event-content">
+            <div class="event-title">Airport Pickup at Tweed</div>
+            <div class="event-details">Someone needs to collect Julie from small airport</div>
+            <div class="event-badges"><span class="badge time-badge">🕐 10:39 PM EDT</span><span class="badge date-badge">May 22</span><span class="badge action-badge">⚠️ Action Needed</span><span class="badge transport-badge">Transport</span><span class="badge location-badge">Tweed New Haven Airport</span></div>
+            
+            
+            <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(25)">
+              🚗 Show transport details
+            </button>
+            <div class="transport-info" id="transport-25">
+              <div><strong>Location:</strong> Tweed New Haven Airport</div>
+              <div><strong>Transport:</strong> Details to be added</div>
+              
+            </div>
+          </div>
+        </div>
+      
+        <div class="event-item" onclick="toggleTransport(26)">
+          <div class="event-icon">🏠</div>
+          <div class="event-content">
+            <div class="event-title">Memorial Day Weekend</div>
+            <div class="event-details">Family time with Mom - hoping for nice weather Sunday</div>
+            <div class="event-badges"><span class="badge time-badge">🕐 All weekend</span><span class="badge date-badge">May 22</span><span class="badge status-badge">Confirmed</span><span class="badge accommodation-badge">Accommodation</span><span class="badge location-badge">149 Idlewood Dr, Stamford CT</span></div>
+            <div class="host-info">🏠 <strong>Host:</strong> Mom & Dad</div>
+            
+            <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(27)">
+              🚗 Show transport details
+            </button>
+            <div class="transport-info" id="transport-27">
+              <div><strong>Location:</strong> 149 Idlewood Dr, Stamford CT</div>
+              <div><strong>Transport:</strong> Details to be added</div>
+              <div><strong>Host:</strong> Mom & Dad</div>
+            </div>
+          </div>
+        </div>
+      
+        <div class="event-item action-needed" onclick="toggleTransport(28)">
+          <div class="event-icon">🎭</div>
+          <div class="event-content">
+            <div class="event-title">Memorial Day Gathering</div>
+            <div class="event-details">Gathering at 149 Idewood</div>
+            <div class="event-badges"><span class="badge time-badge">🕐 12:00 PM EDT</span><span class="badge date-badge">May 24</span><span class="badge action-badge">⚠️ Action Needed</span><span class="badge event-badge">Event</span><span class="badge location-badge">149 Idelwood Drive</span></div>
+            
+            <a href="https://luma.com/92fiaehy" target="_blank" class="event-link">🔗 Link</a>
+            <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(29)">
+              🚗 Show transport details
+            </button>
+            <div class="transport-info" id="transport-29">
+              <div><strong>Location:</strong> 149 Idelwood Drive</div>
+              <div><strong>Transport:</strong> Details to be added</div>
+              
+            </div>
+          </div>
+        </div>
+      
+        <div class="event-item" onclick="toggleTransport(30)">
+          <div class="event-icon">🎭</div>
+          <div class="event-content">
+            <div class="event-title">Trell Cousins Early BDAY drinks Upper West Side</div>
+            <div class="event-details">UWS Gathering</div>
+            <div class="event-badges"><span class="badge time-badge">🕐 4:30 PM EDT</span><span class="badge date-badge">May 26</span><span class="badge status-badge">Confirmed</span><span class="badge event-badge">Event</span><span class="badge location-badge">NYC Upper West Side</span></div>
+            
+            <a href="https://luma.com/y6sl48ni" target="_blank" class="event-link">🔗 Link</a>
+            <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(31)">
+              🚗 Show transport details
+            </button>
+            <div class="transport-info" id="transport-31">
+              <div><strong>Location:</strong> NYC Upper West Side</div>
+              <div><strong>Transport:</strong> Details to be added</div>
+              
+            </div>
+          </div>
+        </div>
+      
+        <div class="event-item" onclick="toggleTransport(32)">
+          <div class="event-icon">🏠</div>
+          <div class="event-content">
+            <div class="event-title">HoTrell NY</div>
+            <div class="event-details">Overnight with Steph</div>
+            <div class="event-badges"><span class="badge time-badge">🕐 9:00 PM EDT</span><span class="badge date-badge">May 26</span><span class="badge status-badge">Confirmed</span><span class="badge accommodation-badge">Accommodation</span><span class="badge location-badge">66th & West End</span></div>
+            <div class="host-info">🏠 <strong>Host:</strong> Cousin Steph</div>
+            
+            <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(33)">
+              🚗 Show transport details
+            </button>
+            <div class="transport-info" id="transport-33">
+              <div><strong>Location:</strong> 66th & West End</div>
+              <div><strong>Transport:</strong> Details to be added</div>
+              <div><strong>Host:</strong> Cousin Steph</div>
+            </div>
+          </div>
+        </div>
+      
+        <div class="event-item action-needed" onclick="toggleTransport(34)">
+          <div class="event-icon">🤝</div>
+          <div class="event-content">
+            <div class="event-title">Show + Lunch with Max</div>
+            <div class="event-details">Matinee show then lunch catch-up</div>
+            <div class="event-badges"><span class="badge time-badge">🕐 2:00 PM EDT</span><span class="badge date-badge">May 27</span><span class="badge action-badge">⚠️ Action Needed</span><span class="badge social-badge">Social</span><span class="badge location-badge">NYC Theater District</span></div>
+            
+            
+            <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(35)">
+              🚗 Show transport details
+            </button>
+            <div class="transport-info" id="transport-35">
+              <div><strong>Location:</strong> NYC Theater District</div>
+              <div><strong>Transport:</strong> Details to be added</div>
+              
+            </div>
+          </div>
+        </div>
+      
+        <div class="event-item action-needed" onclick="toggleTransport(36)">
+          <div class="event-icon">🗺️</div>
+          <div class="event-content">
+            <div class="event-title">Road Trip to Washington DC</div>
+            <div class="event-details">5-hour drive through beautiful countryside</div>
+            <div class="event-badges"><span class="badge time-badge">🕐 10:00 AM EDT</span><span class="badge date-badge">May 28</span><span class="badge action-badge">⚠️ Action Needed</span><span class="badge travel-badge">Travel</span><span class="badge location-badge">Interstate Drive</span></div>
+            
+            
+            <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(37)">
+              🚗 Show transport details
+            </button>
+            <div class="transport-info" id="transport-37">
+              <div><strong>Location:</strong> Interstate Drive</div>
+              <div><strong>Transport:</strong> Details to be added</div>
+              
+            </div>
+          </div>
+        </div>
+      
+        <div class="event-item action-needed" onclick="toggleTransport(38)">
+          <div class="event-icon">🏠</div>
+          <div class="event-content">
+            <div class="event-title">DC Accommodation Check-in</div>
+            <div class="event-details">Need hotel near monuments and museums</div>
+            <div class="event-badges"><span class="badge time-badge">🕐 4:00 PM EDT</span><span class="badge date-badge">May 28</span><span class="badge action-badge">⚠️ Action Needed</span><span class="badge accommodation-badge">Accommodation</span><span class="badge location-badge">Washington DC</span></div>
+            
+            
+            <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(39)">
+              🚗 Show transport details
+            </button>
+            <div class="transport-info" id="transport-39">
+              <div><strong>Location:</strong> Washington DC</div>
+              <div><strong>Transport:</strong> Details to be added</div>
+              
+            </div>
+          </div>
+        </div>
+      
+        <div class="event-item action-needed" onclick="toggleTransport(40)">
+          <div class="event-icon">🗽</div>
+          <div class="event-content">
+            <div class="event-title">DC Exploration Days</div>
+            <div class="event-details">Museums monuments and maybe see friends</div>
+            <div class="event-badges"><span class="badge time-badge">🕐 Full days</span><span class="badge date-badge">May 29</span><span class="badge action-badge">⚠️ Action Needed</span><span class="badge tourism-badge">Tourism</span><span class="badge location-badge">Washington DC</span></div>
+            
+            
+            <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(41)">
+              🚗 Show transport details
+            </button>
+            <div class="transport-info" id="transport-41">
+              <div><strong>Location:</strong> Washington DC</div>
+              <div><strong>Transport:</strong> Details to be added</div>
+              
+            </div>
+          </div>
+        </div>
+      
+        <div class="event-item action-needed" onclick="toggleTransport(42)">
+          <div class="event-icon">🗺️</div>
+          <div class="event-content">
+            <div class="event-title">Return Drive to Stamford</div>
+            <div class="event-details">Saturday morning departure to avoid traffic</div>
+            <div class="event-badges"><span class="badge time-badge">🕐 9:00 AM EDT</span><span class="badge date-badge">May 31</span><span class="badge action-badge">⚠️ Action Needed</span><span class="badge travel-badge">Travel</span><span class="badge location-badge">DC to Stamford CT</span></div>
+            
+            
+            <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(43)">
+              🚗 Show transport details
+            </button>
+            <div class="transport-info" id="transport-43">
+              <div><strong>Location:</strong> DC to Stamford CT</div>
+              <div><strong>Transport:</strong> Details to be added</div>
+              
+            </div>
+          </div>
+        </div>
+      
+        <div class="event-item action-needed" onclick="toggleTransport(44)">
+          <div class="event-icon">🚗</div>
+          <div class="event-content">
+            <div class="event-title">Very Early Newark Transport</div>
+            <div class="event-details">4:00 AM departure for 6:00 AM flight - very early!</div>
+            <div class="event-badges"><span class="badge time-badge">🕐 4:00 AM EDT</span><span class="badge date-badge">Jun 1</span><span class="badge action-badge">⚠️ Action Needed</span><span class="badge transport-badge">Transport</span><span class="badge location-badge">Stamford to Newark</span></div>
+            
+            
+            <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(45)">
+              🚗 Show transport details
+            </button>
+            <div class="transport-info" id="transport-45">
+              <div><strong>Location:</strong> Stamford to Newark</div>
+              <div><strong>Transport:</strong> Details to be added</div>
+              
+            </div>
+          </div>
+        </div>
+      
+        <div class="event-item" onclick="toggleTransport(46)">
+          <div class="event-icon">✈️</div>
+          <div class="event-content">
+            <div class="event-title">United Newark to San Francisco (UA1960)</div>
+            <div class="event-details">Cross-country flight back to SF arriving 9:59am PDT</div>
+            <div class="event-badges"><span class="badge time-badge">🕐 7:00 AM EDT</span><span class="badge date-badge">Jun 1</span><span class="badge status-badge">Confirmed</span><span class="badge flight-badge">Flight</span><span class="badge location-badge">Newark Airport Terminal C</span></div>
+            
+            
+            <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(47)">
+              🚗 Show transport details
+            </button>
+            <div class="transport-info" id="transport-47">
+              <div><strong>Location:</strong> Newark Airport Terminal C</div>
+              <div><strong>Transport:</strong> Details to be added</div>
+              
+            </div>
+          </div>
+        </div>
+      
+              </div>
+            </div>
+          
+            <div class="trip-section">
+              <div class="section-header">
+                <span>🌉 San Francisco - Part 2</span>
+                <span>3 items</span>
+              </div>
+              <div class="section-content">
+                
+        <div class="event-item action-needed" onclick="toggleTransport(48)">
+          <div class="event-icon">🚗</div>
+          <div class="event-content">
+            <div class="event-title">San Francisco Layover</div>
+            <div class="event-details">Pick up at airport</div>
+            <div class="event-badges"><span class="badge time-badge">🕐 9:59 AM PDT</span><span class="badge date-badge">Jun 1</span><span class="badge action-badge">⚠️ Action Needed</span><span class="badge transport-badge">Transport</span><span class="badge location-badge">SFO</span></div>
+            
+            
+            <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(49)">
+              🚗 Show transport details
+            </button>
+            <div class="transport-info" id="transport-49">
+              <div><strong>Location:</strong> SFO</div>
+              <div><strong>Transport:</strong> Details to be added</div>
+              
+            </div>
+          </div>
+        </div>
+      
+        <div class="event-item" onclick="toggleTransport(50)">
+          <div class="event-icon">🏠</div>
+          <div class="event-content">
+            <div class="event-title">SF Accomodation</div>
+            <div class="event-details">One last day in the Bay</div>
+            <div class="event-badges"><span class="badge time-badge">🕐 10:00 AM PDT</span><span class="badge date-badge">Jun 1</span><span class="badge accommodation-badge">Accommodation</span><span class="badge location-badge">235 Laidley Street SF CA 94131</span></div>
+            
+            <a href="Marcy" target="_blank" class="event-link">🔗 Link</a><a href="Dave" target="_blank" class="event-link">🔗 Link</a><a href="Lila" target="_blank" class="event-link">🔗 Link</a><a href="& Ivy" target="_blank" class="event-link">🔗 Link</a>
+            <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(51)">
+              🚗 Show transport details
+            </button>
+            <div class="transport-info" id="transport-51">
+              <div><strong>Location:</strong> 235 Laidley Street SF CA 94131</div>
+              <div><strong>Transport:</strong> Details to be added</div>
+              
+            </div>
+          </div>
+        </div>
+      
+        <div class="event-item" onclick="toggleTransport(52)">
+          <div class="event-icon">✈️</div>
+          <div class="event-content">
+            <div class="event-title">QF74 San Francisco to Sydney</div>
+            <div class="event-details">Depart 9:30 PM arrive Sydney 6:25 AM+2</div>
+            <div class="event-badges"><span class="badge time-badge">🕐 9:30 PM PDT</span><span class="badge date-badge">Jun 2</span><span class="badge status-badge">Confirmed</span><span class="badge flight-badge">Flight</span><span class="badge location-badge">SFO Terminal I</span></div>
+            
+            
+            <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(53)">
+              🚗 Show transport details
+            </button>
+            <div class="transport-info" id="transport-53">
+              <div><strong>Location:</strong> SFO Terminal I</div>
+              <div><strong>Transport:</strong> Details to be added</div>
+              
+            </div>
+          </div>
+        </div>
+      
+              </div>
+            </div>
+          
+            <div class="trip-section">
+              <div class="section-header">
+                <span>🏠 Sydney - Return</span>
+                <span>1 items</span>
+              </div>
+              <div class="section-content">
+                
+        <div class="event-item" onclick="toggleTransport(54)">
+          <div class="event-icon">🏠</div>
+          <div class="event-content">
+            <div class="event-title">Arrive Home Sydney</div>
+            <div class="event-details">End of amazing US adventure!</div>
+            <div class="event-badges"><span class="badge time-badge">🕐 6:25 AM AEST+2</span><span class="badge date-badge">Jun 2</span><span class="badge status-badge">Confirmed</span><span class="badge home-badge">Home</span><span class="badge location-badge">Sydney Airport T1</span></div>
+            
+            
+            <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(55)">
+              🚗 Show transport details
+            </button>
+            <div class="transport-info" id="transport-55">
+              <div><strong>Location:</strong> Sydney Airport T1</div>
+              <div><strong>Transport:</strong> Details to be added</div>
+              
+            </div>
+          </div>
+        </div>
+      
+              </div>
+            </div>
+          
             </div>
             
             <div class="progress-container" id="progressContainer">
@@ -390,7 +975,7 @@
                 </div>
                 <div style="text-align: center; padding: 20px; color: #666;">
                     <p>✨ This app auto-updates from Google Sheets every 30 minutes</p>
-                    <p>Last sync: <span id="lastSync">Loading...</span></p>
+                    <p>Last sync: 4/20/2026, 9:55:26 AM<span id="lastSync">Loading...</span></p>
                 </div>
             </div>
         </div>
