@@ -142,9 +142,23 @@ jobs:
                           event.title.includes('Birthday') || event.title.includes('BDAY') ? '🥂' : 
                           event.title.includes('Memorial') ? '🇺🇸' : '🎭';
               
-              // Clean up location - just take the main part before commas/details
-              const cleanLocation = event.location.split(',')[0].replace(/^\s*"?\s*/, '').replace(/\s*"?\s*$/, '');
-              const shortTitle = event.title.replace('Aussie American in the Bay - ', '').replace('Trell Cousins Early BDAY drinks Upper West Side', 'Trell Cousins Birthday');
+              // Clean up location - extract key location info
+              let cleanLocation = event.location;
+              if (cleanLocation.includes('Main Parade - Presidio Park')) {
+                cleanLocation = 'Presidio Park';
+              } else if (cleanLocation.includes('Fort Mason')) {
+                cleanLocation = 'Fort Mason, SF';
+              } else if (cleanLocation.includes('NYC Upper West Side')) {
+                cleanLocation = 'Upper West Side, NYC';
+              } else if (cleanLocation.includes('149 Idelwood Drive')) {
+                cleanLocation = 'Stamford, CT';
+              } else {
+                // Generic cleanup - take first part before comma
+                cleanLocation = cleanLocation.split(',')[0].trim();
+              }
+              
+              const shortTitle = event.title.replace('Aussie American in the Bay - ', '')
+                                          .replace('Trell Cousins Early BDAY drinks Upper West Side', 'Trell Cousins Birthday');
               
               return `<a href="${firstLink.trim()}" target="_blank">${icon} ${shortTitle} - ${cleanLocation} (${event.date})</a>`;
             }).join('\\n            ');
@@ -156,7 +170,8 @@ jobs:
               'SF': '🌉 San Francisco',
               'Chicago': '🏙️ Chicago', 
               'East Coast': '🗽 East Coast (NY/CT/DC)',
-              'East Coast - NY/CT/DC': '🗽 East Coast (NY/CT/DC)'
+              'East Coast - NY/CT/DC': '🗽 East Coast (NY/CT/DC)',
+              'Sydney': '🏠 Home - Sydney'
             };
             
             let sectionsHtml = '';
@@ -172,7 +187,11 @@ jobs:
                   return (segment || 'Other') === segmentKey && date;
                 }).map(row => {
                   const [title, details, date] = row;
-                  return new Date(date + ', 2026'); // Add year for proper sorting
+                  // Convert date to proper format for sorting
+                  let dateStr = date;
+                  if (dateStr.includes('May')) dateStr = '2026-05-' + dateStr.replace('May ', '');
+                  else if (dateStr.includes('Jun')) dateStr = '2026-06-' + dateStr.replace('Jun ', '');
+                  return new Date(dateStr);
                 });
                 
                 if (dates.length > 0) {
