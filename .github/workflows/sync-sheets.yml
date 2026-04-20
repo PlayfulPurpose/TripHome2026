@@ -163,73 +163,52 @@ jobs:
               return `<a href="${firstLink.trim()}" target="_blank">${icon} ${shortTitle} - ${cleanLocation} (${event.date})</a>`;
             }).join('\\n            ');
             
-            // Generate segmented sections - SORT BY DATE
-            const segmentOrder = ['San Francisco', 'Chicago', 'East Coast', 'East Coast - NY/CT/DC']; // Handle both formats
+            // Generate segmented sections - FORCE CHRONOLOGICAL ORDER BY TRIP TIMELINE
+            const timelineOrder = ['Sydney - Depart', 'San Francisco - Part 1', 'Chicago', 'East Coast - NY/CT/DC', 'San Francisco - Part 2', 'Sydney - Return'];
             const segmentEmojis = {
-              'San Francisco': '🌉 San Francisco',
-              'SF': '🌉 San Francisco',
+              'Sydney - Depart': '✈️ Sydney - Departure',
+              'San Francisco - Part 1': '🌉 San Francisco - Part 1',
               'Chicago': '🏙️ Chicago', 
-              'East Coast': '🗽 East Coast (NY/CT/DC)',
               'East Coast - NY/CT/DC': '🗽 East Coast (NY/CT/DC)',
-              'Sydney': '🏠 Home - Sydney'
+              'San Francisco - Part 2': '🌉 San Francisco - Part 2',
+              'Sydney - Return': '🏠 Sydney - Return'
             };
             
             let sectionsHtml = '';
             let globalEventCounter = 0;
             
-            // Sort segments by earliest date in each segment
-            const segmentDates = {};
-            Object.keys(segments).forEach(segmentKey => {
-              if (segments[segmentKey] && segments[segmentKey].length > 0) {
-                // Find earliest date in this segment
-                const dates = rows.filter(row => {
-                  const [title, details, date, time, location, status, type, links, host, segment] = row;
-                  return (segment || 'Other') === segmentKey && date;
-                }).map(row => {
-                  const [title, details, date] = row;
-                  // Convert date to proper format for sorting
-                  let dateStr = date;
-                  if (dateStr.includes('May')) dateStr = '2026-05-' + dateStr.replace('May ', '');
-                  else if (dateStr.includes('Jun')) dateStr = '2026-06-' + dateStr.replace('Jun ', '');
-                  return new Date(dateStr);
-                });
-                
-                if (dates.length > 0) {
-                  segmentDates[segmentKey] = Math.min(...dates.map(d => d.getTime()));
-                } else {
-                  segmentDates[segmentKey] = new Date().getTime(); // Default to now if no dates
+            // Process segments in forced chronological order
+            timelineOrder.forEach(segmentKey => {
+              // Check all possible variations of segment names
+              const possibleKeys = [segmentKey];
+              if (segmentKey === 'San Francisco') possibleKeys.push('SF');
+              if (segmentKey === 'East Coast - NY/CT/DC') possibleKeys.push('East Coast');
+              
+              for (const key of possibleKeys) {
+                if (segments[key] && segments[key].length > 0) {
+                  const segmentTitle = segmentEmojis[key] || `📍 ${key}`;
+                  const segmentEvents = segments[key].map(eventHtml => {
+                    // Update event counter in the HTML
+                    return eventHtml.replace(/toggleTransport\(\d+\)/g, () => {
+                      return `toggleTransport(${globalEventCounter++})`;
+                    }).replace(/transport-\d+/g, () => {
+                      return `transport-${globalEventCounter - 1}`;
+                    });
+                  }).join('');
+                  
+                  sectionsHtml += `
+                    <div class="trip-section">
+                      <div class="section-header">
+                        <span>${segmentTitle}</span>
+                        <span>${segments[key].length} items</span>
+                      </div>
+                      <div class="section-content">
+                        ${segmentEvents}
+                      </div>
+                    </div>
+                  `;
+                  break; // Only process the first matching key
                 }
-              }
-            });
-            
-            // Sort segment keys by date
-            const sortedSegmentKeys = Object.keys(segments).sort((a, b) => {
-              return (segmentDates[a] || 0) - (segmentDates[b] || 0);
-            });
-            
-            sortedSegmentKeys.forEach(segmentKey => {
-              if (segments[segmentKey] && segments[segmentKey].length > 0) {
-                const segmentTitle = segmentEmojis[segmentKey] || `📍 ${segmentKey}`;
-                const segmentEvents = segments[segmentKey].map(eventHtml => {
-                  // Update event counter in the HTML
-                  return eventHtml.replace(/toggleTransport\(\d+\)/g, () => {
-                    return `toggleTransport(${globalEventCounter++})`;
-                  }).replace(/transport-\d+/g, () => {
-                    return `transport-${globalEventCounter - 1}`;
-                  });
-                }).join('');
-                
-                sectionsHtml += `
-                  <div class="trip-section">
-                    <div class="section-header">
-                      <span>${segmentTitle}</span>
-                      <span>${segments[segmentKey].length} items</span>
-                    </div>
-                    <div class="section-content">
-                      ${segmentEvents}
-                    </div>
-                  </div>
-                `;
               }
             });
             
