@@ -50,7 +50,7 @@ jobs:
           try {
             console.log('📊 Fetching from Google Sheets...');
             
-            const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/A:I?key=${API_KEY}`;
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/A:J?key=${API_KEY}`;
             const data = await makeRequest(url);
             
             if (!data.values || data.values.length < 2) {
@@ -60,13 +60,29 @@ jobs:
             const [headers, ...rows] = data.values;
             console.log(`📋 Found ${rows.length} events`);
             
-            // Generate events HTML
-            let eventsHtml = '';
-            let eventCounter = 0;
+            // Group events by segment
+            const segments = {};
+            const eventLinks = [];
             
             rows.forEach((row, index) => {
-              const [title, details, date, time, location, status, type, links, host] = row;
+              const [title, details, date, time, location, status, type, links, host, segment] = row;
               if (!title) return;
+              
+              // Collect event links for header
+              if (type === 'Event' && links) {
+                eventLinks.push({
+                  title,
+                  location,
+                  links,
+                  date
+                });
+              }
+              
+              // Group by segment
+              const segmentName = segment || 'Other';
+              if (!segments[segmentName]) {
+                segments[segmentName] = [];
+              }
               
               const badges = [];
               if (time) badges.push(`<span class="badge time-badge">🕐 ${time}</span>`);
@@ -86,29 +102,27 @@ jobs:
               if (type) badges.push(`<span class="badge ${type.toLowerCase()}-badge">${type}</span>`);
               if (location) badges.push(`<span class="badge location-badge">${location}</span>`);
               
-              const eventLinks = links ? 
+              const eventLinksHtml = links ? 
                 links.split(',').map(link => 
                   `<a href="${link.trim()}" target="_blank" class="event-link">🔗 Link</a>`
                 ).join('') : '';
               
-              // Add host info if available
               const hostInfo = host ? `<div class="host-info">🏠 <strong>Host:</strong> ${host}</div>` : '';
-              
               const icon = getIcon(type);
               
-              eventsHtml += `
-                <div class="event-item${statusClass}" onclick="toggleTransport(${eventCounter})">
+              const eventHtml = `
+                <div class="event-item${statusClass}" onclick="toggleTransport(${segments[segmentName].length})">
                   <div class="event-icon">${icon}</div>
                   <div class="event-content">
                     <div class="event-title">${title}</div>
                     <div class="event-details">${details || ''}</div>
                     <div class="event-badges">${badges.join('')}</div>
                     ${hostInfo}
-                    ${eventLinks}
-                    <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(${eventCounter})">
+                    ${eventLinksHtml}
+                    <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(${segments[segmentName].length})">
                       🚗 Show transport details
                     </button>
-                    <div class="transport-info" id="transport-${eventCounter}">
+                    <div class="transport-info" id="transport-${segments[segmentName].length}">
                       <div><strong>Location:</strong> ${location || 'TBD'}</div>
                       <div><strong>Transport:</strong> Details to be added</div>
                       ${host ? `<div><strong>Host:</strong> ${host}</div>` : ''}
@@ -116,38 +130,111 @@ jobs:
                   </div>
                 </div>
               `;
-              eventCounter++;
+              
+              segments[segmentName].push(eventHtml);
+            });
+            
+            // Generate dynamic event links
+            const dynamicEventLinks = eventLinks.slice(0, 4).map(event => {
+              const firstLink = event.links.split(',')[0];
+              const icon = event.title.includes('Picnic') ? '📅' : 
+                          event.title.includes('Improv') ? '🎪' : 
+                          event.title.includes('Birthday') || event.title.includes('BDAY') ? '🥂' : '🎭';
+              return `<a href="${firstLink.trim()}" target="_blank">${icon} ${event.title} - ${event.location}</a>`;
+            }).join('\\n            ');
+            
+            // Generate segmented sections
+            const segmentOrder = ['SF', 'Chicago', 'East Coast'];
+            const segmentEmojis = {
+              'SF': '🌉 San Francisco',
+              'Chicago': '🏙️ Chicago', 
+              'East Coast': '🗽 East Coast (NY/CT/DC)'
+            };
+            
+            let sectionsHtml = '';
+            let globalEventCounter = 0;
+            
+            segmentOrder.forEach(segmentKey => {
+              if (segments[segmentKey] && segments[segmentKey].length > 0) {
+                const segmentTitle = segmentEmojis[segmentKey] || segmentKey;
+                const segmentEvents = segments[segmentKey].map(eventHtml => {
+                  // Update event counter in the HTML
+                  return eventHtml.replace(/toggleTransport\(\d+\)/g, () => {
+                    return `toggleTransport(${globalEventCounter++})`;
+                  }).replace(/transport-\d+/g, () => {
+                    return `transport-${globalEventCounter - 1}`;
+                  });
+                }).join('');
+                
+                sectionsHtml += `
+                  <div class="trip-section">
+                    <div class="section-header">
+                      <span>${segmentTitle}</span>
+                      <span>${segments[segmentKey].length} items</span>
+                    </div>
+                    <div class="section-content">
+                      ${segmentEvents}
+                    </div>
+                  </div>
+                `;
+              }
+            });
+            
+            // Handle remaining segments
+            Object.keys(segments).forEach(segmentKey => {
+              if (!segmentOrder.includes(segmentKey) && segments[segmentKey].length > 0) {
+                const segmentEvents = segments[segmentKey].map(eventHtml => {
+                  return eventHtml.replace(/toggleTransport\(\d+\)/g, () => {
+                    return `toggleTransport(${globalEventCounter++})`;
+                  }).replace(/transport-\d+/g, () => {
+                    return `transport-${globalEventCounter - 1}`;
+                  });
+                }).join('');
+                
+                sectionsHtml += `
+                  <div class="trip-section">
+                    <div class="section-header">
+                      <span>📍 ${segmentKey}</span>
+                      <span>${segments[segmentKey].length} items</span>
+                    </div>
+                    <div class="section-content">
+                      ${segmentEvents}
+                    </div>
+                  </div>
+                `;
+              }
             });
             
             // Read template
             const template = fs.readFileSync('index.html', 'utf8');
             
-            // Replace the trip content
-            const sectionHtml = `
-              <div class="trip-section">
-                <div class="section-header">
-                  <span>✈️ Julie's US Trip 2026 - Live from Google Sheets</span>
-                  <span>${rows.length} items</span>
-                </div>
-                <div class="section-content">
-                  ${eventsHtml}
-                </div>
-              </div>
-            `;
+            // Replace dynamic event links
+            const eventLinksStart = template.indexOf('<h3>🎭 Direct Event Links:</h3>');
+            const eventLinksEnd = template.indexOf('</div>', eventLinksStart);
             
+            let updatedTemplate = template;
+            if (eventLinksStart !== -1 && eventLinksEnd !== -1) {
+              const newEventLinksSection = `<h3>🎭 Direct Event Links:</h3>
+            ${dynamicEventLinks}`;
+              updatedTemplate = template.substring(0, eventLinksStart) + 
+                               newEventLinksSection + 
+                               template.substring(eventLinksEnd);
+            }
+            
+            // Replace trip content
             const startMarker = '<div id="tripContent">';
             const endMarker = '</div>\n            \n            <div class="progress-container"';
             
-            const start = template.indexOf(startMarker);
-            const end = template.indexOf(endMarker);
+            const start = updatedTemplate.indexOf(startMarker);
+            const end = updatedTemplate.indexOf(endMarker);
             
             if (start === -1 || end === -1) {
               throw new Error('Could not find tripContent markers in template');
             }
             
-            const newHtml = template.substring(0, start + startMarker.length) + 
-                            '\n' + sectionHtml + '\n            ' + 
-                            template.substring(end);
+            const newHtml = updatedTemplate.substring(0, start + startMarker.length) + 
+                            '\n' + sectionsHtml + '\n            ' + 
+                            updatedTemplate.substring(end);
             
             // Update sync time
             const syncTime = new Date().toLocaleString();
@@ -160,7 +247,8 @@ jobs:
             
             console.log('✅ Successfully updated index.html');
             console.log(`🕒 Last sync: ${syncTime}`);
-            console.log(`📊 Processed ${rows.length} events`);
+            console.log(`📊 Processed ${rows.length} events across ${Object.keys(segments).length} segments`);
+            console.log(`🔗 Generated ${eventLinks.length} dynamic event links`);
             
           } catch (error) {
             console.error('❌ Sync failed:', error.message);
