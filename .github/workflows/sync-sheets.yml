@@ -50,7 +50,7 @@ jobs:
           try {
             console.log('📊 Fetching from Google Sheets...');
             
-            const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/A:J?key=${API_KEY}`;
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/TRIP_DATA_FOR_SHEETS!A1:J100?key=${API_KEY}`;
             const data = await makeRequest(url);
             
             if (!data.values || data.values.length < 2) {
@@ -140,7 +140,7 @@ jobs:
               const icon = event.title.includes('Picnic') ? '📅' : 
                           event.title.includes('Improv') ? '🎪' : 
                           event.title.includes('Birthday') || event.title.includes('BDAY') ? '🥂' : 
-                          event.title.includes('Memorial') ? '🇺🇸' : '🎭';
+                          event.title.includes('Memorial') ? '🧺' : '🎭';
               
               // Clean up location - extract key location info
               let cleanLocation = event.location;
@@ -151,17 +151,18 @@ jobs:
               } else if (cleanLocation.includes('NYC Upper West Side')) {
                 cleanLocation = 'Upper West Side, NYC';
               } else if (cleanLocation.includes('149 Idelwood Drive')) {
-                cleanLocation = 'Stamford, CT';
+                cleanLocation = 'Stamford';
               } else {
                 // Generic cleanup - take first part before comma
                 cleanLocation = cleanLocation.split(',')[0].trim();
               }
               
               const shortTitle = event.title.replace('Aussie American in the Bay - ', '')
-                                          .replace('Trell Cousins Early BDAY drinks Upper West Side', 'Trell Cousins Birthday');
+                                          .replace('Trell Cousins Early BDAY drinks Upper West Side', 'Trell Cousins Birthday')
+                                          .replace('Memorial Day Gathering', 'Memorial Day Gathering');
               
-              return `<a href="${firstLink.trim()}" target="_blank">${icon} ${shortTitle} - ${cleanLocation} (${event.date})</a>`;
-            }).join('\\n            ');
+              return `<a href="${firstLink.trim()}" target="_blank">${icon} ${shortTitle} - ${cleanLocation} (${event.date})</a>   <br>`;
+            }).join('         \\n            ');
             
             // Generate segmented sections - FORCE CHRONOLOGICAL ORDER BY TRIP TIMELINE
             const timelineOrder = ['Sydney - Depart', 'San Francisco - Part 1', 'Chicago', 'East Coast - NY/CT/DC', 'San Francisco - Part 2', 'Sydney - Return'];
