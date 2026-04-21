@@ -165,12 +165,14 @@ jobs:
             }).join('\n            ');
             
             // Generate segmented sections - FORCE CHRONOLOGICAL ORDER BY TRIP TIMELINE
-            const timelineOrder = ['Sydney - Depart', 'San Francisco - Part 1', 'Chicago', 'East Coast - NY/CT/DC', 'San Francisco - Part 2', 'Sydney - Return'];
+            const timelineOrder = ['Sydney - Depart', 'San Francisco - Part 1', 'Chicago', 'East Coast - NY/CT', 'East Coast - DC', 'East Coast - NY/CT - Part 2', 'San Francisco - Part 2', 'Sydney - Return'];
             const segmentEmojis = {
               'Sydney - Depart': '✈️ Sydney - Departure',
               'San Francisco - Part 1': '🌉 San Francisco - Part 1',
               'Chicago': '🏙️ Chicago', 
-              'East Coast - NY/CT/DC': '🗽 East Coast (NY/CT/DC)',
+              'East Coast - NY/CT': '🗽 East Coast (NY/CT)',
+              'East Coast - DC': '🏛️ Washington DC',
+              'East Coast - NY/CT - Part 2': '🗽 East Coast (NY/CT) - Part 2',
               'San Francisco - Part 2': '🌉 San Francisco - Part 2',
               'Sydney - Return': '🏠 Sydney - Return'
             };
