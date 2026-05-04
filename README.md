@@ -15,7 +15,7 @@
 | **QF73** Sydney → SF | May 15 | 9:25 PM AEST → 4:15 PM PDT | ⏳ **WAITLISTED** |
 | **United** SF → Chicago | May 19 | 6:00 AM PDT → 2:40 PM CDT | ✅ Confirmed |
 | **Avelo** Chicago → New Haven | May 22 | 7:00 PM CDT → 9:15 PM EDT | ✅ Confirmed |
-| **United** Newark → SF | Jun 1 | 6:00 AM EDT → 3:30 PM PDT | ✅ Confirmed |
+| **United** Newark → SF | Jun 1 | 7:00 AM EDT → 3:30 PM PDT | ✅ Confirmed |
 | **QF74** SF → Sydney | Jun 2 | 10:30 PM PDT → 6:00 AM AEST+2 | ✅ Confirmed |
 
 ## 🚨 **Critical Action Items**
