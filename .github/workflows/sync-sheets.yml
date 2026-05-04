@@ -50,7 +50,7 @@ jobs:
           try {
             console.log('📊 Fetching from Google Sheets...');
             
-            const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/TRIP_DATA_FOR_SHEETS!A1:J100?key=${API_KEY}`;
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/TRIP_DATA_FOR_SHEETS!A1:K100?key=${API_KEY}`;
             const data = await makeRequest(url);
             
             if (!data.values || data.values.length < 2) {
@@ -65,7 +65,7 @@ jobs:
             const eventLinks = [];
             
             rows.forEach((row, index) => {
-              const [title, details, date, time, location, status, type, links, host, segment] = row;
+              const [title, details, date, time, location, status, type, links, host, segment, transport] = row;
               if (!title) return;
               
               // Collect event links for header
@@ -110,8 +110,19 @@ jobs:
               const hostInfo = host ? `<div class="host-info">🏠 <strong>Host:</strong> ${host}</div>` : '';
               const icon = getIcon(type);
               
+              // Only show transport section if transport info exists
+              const transportSection = transport ? `
+                <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(${segments[segmentName].length + 1})">
+                  🚗 Show transport details
+                </button>
+                <div class="transport-info" id="transport-${segments[segmentName].length + 1}">
+                  <div><strong>Location:</strong> ${location || 'TBD'}</div>
+                  <div><strong>Transport:</strong> ${transport}</div>
+                  ${host ? `<div><strong>Host:</strong> ${host}</div>` : ''}
+                </div>` : '';
+              
               const eventHtml = `
-                <div class="event-item${statusClass}" onclick="toggleTransport(${segments[segmentName].length})">
+                <div class="event-item${statusClass}" onclick="toggleTransport(${segments[segmentName].length + 1})">
                   <div class="event-icon">${icon}</div>
                   <div class="event-content">
                     <div class="event-title">${title}</div>
@@ -119,14 +130,7 @@ jobs:
                     <div class="event-badges">${badges.join('')}</div>
                     ${hostInfo}
                     ${eventLinksHtml}
-                    <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(${segments[segmentName].length})">
-                      🚗 Show transport details
-                    </button>
-                    <div class="transport-info" id="transport-${segments[segmentName].length}">
-                      <div><strong>Location:</strong> ${location || 'TBD'}</div>
-                      <div><strong>Transport:</strong> Details to be added</div>
-                      ${host ? `<div><strong>Host:</strong> ${host}</div>` : ''}
-                    </div>
+                    ${transportSection}
                   </div>
                 </div>
               `;
