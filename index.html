@@ -689,12 +689,12 @@
           </div>
         </div>
       
-        <div class="event-item" onclick="toggleTransport(23)">
+        <div class="event-item action-needed" onclick="toggleTransport(23)">
           <div class="event-icon">🤝</div>
           <div class="event-content">
             <div class="event-title">Meet up with Max</div>
             <div class="event-details">Post show hang out - early dinner</div>
-            <div class="event-badges"><span class="badge time-badge">🕐 4:00 PM EDT</span><span class="badge date-badge">May 27</span><span class="badge status-badge">Confirmed</span><span class="badge social-badge">Social</span><span class="badge location-badge">Location TBD</span></div>
+            <div class="event-badges"><span class="badge time-badge">🕐 4:00 PM EDT</span><span class="badge date-badge">May 27</span><span class="badge action-badge">⚠️ Action Needed</span><span class="badge social-badge">Social</span><span class="badge location-badge">Location TBD</span></div>
             
             
             
@@ -856,10 +856,18 @@
             
             
             
+        <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(36)">
+          🚗 Show transport details
+        </button>
+        <div class="transport-info" id="transport-36">
+          <div><strong>Location:</strong> SFO</div>
+          <div><strong>Transport:</strong> Lyft or Generous friend who loves airport pickups</div>
+          
+        </div>
           </div>
         </div>
       
-        <div class="event-item" onclick="toggleTransport(36)">
+        <div class="event-item" onclick="toggleTransport(37)">
           <div class="event-icon">🏠</div>
           <div class="event-content">
             <div class="event-title">SF Accomodation</div>
@@ -868,14 +876,6 @@
             <div class="host-info">🏠 <strong>Host:</strong> Marcy, Dave, Lila, & Ivy</div>
             
             
-        <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(37)">
-          🚗 Show transport details
-        </button>
-        <div class="transport-info" id="transport-37">
-          <div><strong>Location:</strong> Glen Park CA 94131</div>
-          <div><strong>Transport:</strong> Lyft or Generous friend who loves airport pickups</div>
-          <div><strong>Host:</strong> Marcy, Dave, Lila, & Ivy</div>
-        </div>
           </div>
         </div>
       
@@ -888,6 +888,14 @@
             
             
             
+        <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(39)">
+          🚗 Show transport details
+        </button>
+        <div class="transport-info" id="transport-39">
+          <div><strong>Location:</strong> SFO Terminal I</div>
+          <div><strong>Transport:</strong> Lyft or Generous friend who loves airport pickups</div>
+          
+        </div>
           </div>
         </div>
       
@@ -901,19 +909,19 @@
               </div>
               <div class="section-content">
                 
-        <div class="event-item" onclick="toggleTransport(39)">
+        <div class="event-item" onclick="toggleTransport(40)">
           <div class="event-icon">🏠</div>
           <div class="event-content">
             <div class="event-title">Arrive Home Sydney</div>
-            <div class="event-details">End of amazing US adventure! Pick up HerShee</div>
+            <div class="event-details">End of amazing US adventure! Reunited with HerShee</div>
             <div class="event-badges"><span class="badge time-badge">🕐 6:25 AM AEST+2</span><span class="badge date-badge">Jun 2</span><span class="badge status-badge">Confirmed</span><span class="badge home-badge">Home</span><span class="badge location-badge">Sydney Airport T1</span></div>
             
             
             
-        <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(40)">
+        <button class="expand-toggle" onclick="event.stopPropagation(); toggleTransport(41)">
           🚗 Show transport details
         </button>
-        <div class="transport-info" id="transport-40">
+        <div class="transport-info" id="transport-41">
           <div><strong>Location:</strong> Sydney Airport T1</div>
           <div><strong>Transport:</strong> Sybil</div>
           
@@ -934,7 +942,7 @@
                 </div>
                 <div style="text-align: center; padding: 20px; color: #666;">
                     <p>✨ This app auto-updates from Google Sheets every 30 minutes</p>
-                    <p>Last sync: 5/4/2026, 2:11:37 AM<span id="lastSync">Loading...</span></p>
+                    <p>Last sync: 5/4/2026, 4:14:12 AM<span id="lastSync">Loading...</span></p>
                 </div>
             </div>
         </div>
