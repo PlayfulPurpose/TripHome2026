@@ -5,7 +5,6 @@
 ## 🎯 Quick Links
 
 - **📱 [Live Trip App](https://julie-trell.github.io/julie-us-trip-2026)** *(will be live after GitHub Pages setup)*
-- **📝 [Family Google Doc](https://docs.google.com/document/d/1qHUQh-u84Vgn8DwZYPOprW0t0KhIc4duEeoOsfXKQMU/edit)** - Edit here!
 - **⚠️ [Action Items](docs/action-items.md)** - What needs attention
 
 ## ✈️ **Flight Schedule (Corrected Time Zones)**
@@ -25,9 +24,6 @@
 3. **Tweed Airport Pickup** - Confirm family member availability (9:15 PM EDT)
 4. **DC Accommodation** - Book hotel near monuments
 
-## 👨‍👩‍👧‍👦 **For Family Members**
-
-**Easy Way to Help:** Edit the [Google Doc](https://docs.google.com/document/d/1qHUQh-u84Vgn8DwZYPOprW0t0KhIc4duEeoOsfXKQMU/edit) - no GitHub knowledge needed!
 
 **What you can update:**
 - Pickup arrangements 
